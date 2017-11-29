@@ -5,20 +5,20 @@ import axios from 'axios';
 
 class FirstWordValidator extends React.Component {
     constructor() {
-        super();
-        this.state = {
-            // firstSubmittedWord: this.props.
-            firstWordDef: ''
-        }
-    }
+		super();
+		this.state = {
+			// firstSubmittedWord: this.props.
+			firstWordDef: ''
+		}
+	}
 
-    render() {
-        return (
-            <div>
-                <p></p>
-            </div>
-        )
-    }
+	render() {
+		return (
+			<div>
+				<p></p>
+			</div>
+		)
+	}
 }
 
 export default FirstWordValidator
