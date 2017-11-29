@@ -20,9 +20,10 @@ class MainInput extends React.Component {
       this.submitWord = this.submitWord.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.verifyFirstWord = this.verifyFirstWord.bind(this);
-		this.checkDefinition = this.checkDefinition.bind(this);
+		// this.checkDefinition = this.checkDefinition.bind(this);
 		this.flipWord = this.flipWord.bind(this);
 		this.runRequest = this.runRequest.bind(this);
+		this.flipTheWord = this.flipTheWord.bind(this);
 	}
 	
 	runRequest(urlSection, word) {
@@ -51,14 +52,24 @@ class MainInput extends React.Component {
 		});
 	}
 	
+	flipTheWord(word) {
+		this.flipWord(word);
+	  console.log(this.flipWord(word));
+  }
+
 	// first API request to check if the submitted word is valid or not
 	verifyFirstWord(wordURL, word) {
 		this.runRequest(wordURL, word);
+	}
  
-		// If the first word is valid, then flip the word.
-		// Check the flipped word is valid
-		// If the flipped word is valid, get the definition of the first and the flipped word
-	}	
+	// If the first word is valid, then flip the word.
+
+	
+
+
+	// Check the flipped word is valid
+	// If the flipped word is valid, get the definition of the first and the flipped word
+
 
 
 
@@ -110,31 +121,31 @@ class MainInput extends React.Component {
 
 
 	//second API request to check for the definition of the first word
-	checkDefinition(word) {
-		axios({
-			method: 'GET',
-			url: 'https://proxy.hackeryou.com',
-			dataResponse: 'json',
-			paramsSerializer: function (params) {
-				return Qs.stringify(params, { arrayFormat: 'brackets' })
-			},
-			params: {
-				reqUrl: `https://od-api.oxforddictionaries.com/api/v1/entries/en/${word}`,
-				proxyHeaders: {
-				'header_params': 'value',
-				'app_key': key,
-				'app_id': id
-				},
-				xmlToJSON: false
-			}
-		}).then((res) => {
-			let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
-			console.log(definition)
-			// this.setState ({
-			// 	firstWordDefinition : definition
-			// })
-		})
-	}
+	// checkDefinition(word) {
+	// 	axios({
+	// 		method: 'GET',
+	// 		url: 'https://proxy.hackeryou.com',
+	// 		dataResponse: 'json',
+	// 		paramsSerializer: function (params) {
+	// 			return Qs.stringify(params, { arrayFormat: 'brackets' })
+	// 		},
+	// 		params: {
+	// 			reqUrl: `https://od-api.oxforddictionaries.com/api/v1/entries/en/${word}`,
+	// 			proxyHeaders: {
+	// 			'header_params': 'value',
+	// 			'app_key': key,
+	// 			'app_id': id
+	// 			},
+	// 			xmlToJSON: false
+	// 		}
+	// 	}).then((res) => {
+	// 		let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
+	// 		console.log(definition)
+	// 		// this.setState ({
+	// 		// 	firstWordDefinition : definition
+	// 		// })
+	// 	})
+	// }
 
 	//write a function that takes the firstWord and flip it
   flipWord(str) {
