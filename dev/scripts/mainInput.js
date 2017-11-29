@@ -10,102 +10,121 @@ class MainInput extends React.Component {
    constructor() {
       super();
       this.state = {
-         firstWord : ''
+			firstWord : '',
+			firstWordDefinition : '',
+			flippedWord : '',
+			flippedWordDefinition : ''
       }
       this.submitWord = this.submitWord.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.verifyFirstWord = this.verifyFirstWord.bind(this);
-      this.checkDefinition = this.checkDefinition.bind(this);
-   }
-    verifyFirstWord(word) {
-        console.log(word);
-        axios({
-            method: 'GET',
-            url: 'https://proxy.hackeryou.com',
-            dataResponse: 'json',
-            paramsSerializer: function (params) {
-                return Qs.stringify(params, { arrayFormat: 'brackets' })
-            },
-            params: {
-                reqUrl: `https://od-api.oxforddictionaries.com/api/v1/inflections/en/${word}`,
-                proxyHeaders: {
-                    'header_params': 'value',
-                    'app_key': key,
-                    'app_id': id
-                },
-                xmlToJSON: false
-            }
-        }).then((res) => {
-            // this is a real word
-            
-            const checkWord = res.data.results[0].id;
-            console.log(checkWord);
-            this.checkDefinition(checkWord)
-                
+		this.checkDefinition = this.checkDefinition.bind(this);
+		this.flipWord = this.flipWord.bind(this);
+	}
+	
+	// first API request to check if the submitted word is valid or not
+	verifyFirstWord(word) {
+		axios({
+			method: 'GET',
+			url: 'https://proxy.hackeryou.com',
+			dataResponse: 'json',
+			paramsSerializer: function (params) {
+				return Qs.stringify(params, { arrayFormat: 'brackets' })
+			},
+			params: {
+				reqUrl: `https://od-api.oxforddictionaries.com/api/v1/inflections/en/${word}`,
+				proxyHeaders: {
+					'header_params': 'value',
+					'app_key': key,
+					'app_id': id
+				},
+				xmlToJSON: false
+			}
+		}).then((res) => {
+			// this is a real word
+			const checkWord = res.data.results[0].id;
 
-        }).catch((error) => {
-            console.log(error.response);
-            // POPUP MODULE TO SAY ERRORORORORO
-        });
-    }
+			const firstDefinition = this.checkDefinition(checkWord);
+			const wordFlipped = this.flipWord(checkWord);
+			const flippedDefinition = this.checkDefinition(wordFlipped);
+			this.setState ({
+				firstWordDefinition : firstDefinition,
+				flippedWord : wordFlipped,
+				flippedWordDefinition : flippedDefinition
+			})
+		}).catch((error) => {
+			console.log(error.response);
+			// POPUP MODULE TO SAY "word is not valid. Try again"
+		});
+	}
 
+	//second API request to check for the definition of the first word
+	checkDefinition(word) {
+		axios({
+			method: 'GET',
+			url: 'https://proxy.hackeryou.com',
+			dataResponse: 'json',
+			paramsSerializer: function (params) {
+				return Qs.stringify(params, { arrayFormat: 'brackets' })
+			},
+			params: {
+				reqUrl: `https://od-api.oxforddictionaries.com/api/v1/entries/en/${word}`,
+				proxyHeaders: {
+				'header_params': 'value',
+				'app_key': key,
+				'app_id': id
+				},
+				xmlToJSON: false
+			}
+		}).then((res) => {
+			let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
+			console.log(definition)
+			this.setState ({
+				firstWordDefinition : definition
+			})
+		})
+	}
 
-    checkDefinition(word) {
-        console.log(word)
-        axios({
-            method: 'GET',
-            url: 'https://proxy.hackeryou.com',
-            dataResponse: 'json',
-            paramsSerializer: function (params) {
-                return Qs.stringify(params, { arrayFormat: 'brackets' })
-            },
-            params: {
-                reqUrl: `https://od-api.oxforddictionaries.com/api/v1/entries/en/${word}`,
-                proxyHeaders: {
-                    'header_params': 'value',
-                    'app_key': key,
-                    'app_id': id
-                },
-                xmlToJSON: false
-            }
-        }).then((res) => {
-            console.log(res)
-            let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0]
-            console.log(definition)
-        })
-    }
+	//write a function that takes the firstWord and flip it
+  flipWord(str) {
+	var splitString = str.split("");
+	var reverseArray = splitString.reverse();
+	var flippedWord = reverseArray.join("");
+	return flippedWord;
+  }
 
-
-
-    submitWord(e) {
-        e.preventDefault();
-        console.log(this.state.firstWord)
-        const submittedWord = this.state.firstWord
-    //   Write a method to run axios to validate word from API when the button is submitted
-    // If the word is true, then definition method runs. If not a word, 'try again'
-    this.verifyFirstWord(submittedWord);
-   }
+	submitWord(e) {
+		e.preventDefault();
+		console.log(this.state.firstWord)
+		const submittedWord = this.state.firstWord
+		this.verifyFirstWord(submittedWord);
+	}
+	
    handleChange(e) {
       const wordSubmitted = e.target.value
       this.setState({
          firstWord : wordSubmitted
       })
 
-   }
+	}
+	
    render() {
       return (
          <div>
-            <form action="" 
-            onSubmit={this.submitWord}>
+			<form action="" 
+			onSubmit={this.submitWord}>
 
-            <input type="text" 
-            className="firstWord" 
-            onChange ={this.handleChange}
-            value={this.state.firstWord}/>
+			<input type="text" 
+			className="firstWord" 
+			onChange ={this.handleChange}
+			value={this.state.firstWord}/>
 
-            <button type="submit">Submit</button>
-            </form>
-            {/* <FirstWordValidator submittedWord={this.state.firstWord} /> */}
+			<button type="submit">Submit</button>
+			</form>
+			{/* <FirstWordValidator submittedWord={this.state.firstWord} /> */}
+			<h2>{this.state.firstWordDefinition}</h2>
+			<h3>{this.state.flippedWord}</h3>
+			<h3>{this.state.secondWordDefinition}</h3>
          </div>
       )
    }
