@@ -1,0 +1,50 @@
+// FONT STYLING
+	// H1 font - title
+	// H2 font - subtitle/tagline
+	// H3 font - LEVIDROM TYPED WORD
+	// H4 font - subtitle for paragraghs
+	// p general paragraph styling
+	// p definition styling extends p general w/added flare
+
+// LAYOUT
+.wrapper {
+	width: 80%;
+	margin: 0 auto;
+	&::after {
+	@extend .clearfix;
+	}
+}
+
+.row {
+	margin: 100px auto;;
+	width: 100%;
+}
+
+[class*='col-'] {
+	float: left;
+	padding-right: 50px;
+	&::last-of-type {
+		padding-right: 0;
+	}
+}
+
+.col-2 {
+	width: 50%;
+}
+
+.col-3 {
+	width: 33%;
+}
+
+.col-2-3 {
+	width: 66%;
+
+}
+
+.col-4 {
+	width: 25%;
+}
+
+.col-3-4 {
+	width: 75%;
+}
