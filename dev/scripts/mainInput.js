@@ -25,7 +25,7 @@ class MainInput extends React.Component {
                 return Qs.stringify(params, { arrayFormat: 'brackets' })
             },
             params: {
-                reqUrl: `https://od-api.oxforddictionaries.com/api/v1/en/${word}`,
+                reqUrl: `https://od-api.oxforddictionaries.com/api/v1/inflections/en/${word}`,
                 proxyHeaders: {
                     'header_params': 'value',
                     'app_key': key,
