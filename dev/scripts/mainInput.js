@@ -23,6 +23,9 @@ class MainInput extends React.Component {
 		this.checkDefinition = this.checkDefinition.bind(this);
 		this.flipWord = this.flipWord.bind(this);
 		this.runRequest = this.runRequest.bind(this);
+		this.flipTheWord = this.flipTheWord.bind(this);
+		this.runApp = this.runApp.bind(this);
+		this.definitionRequest = this.definitionRequest.bind(this);
 	}
 	
 	runRequest(urlSection, word) {
@@ -50,15 +53,39 @@ class MainInput extends React.Component {
 			// 	// POPUP MODULE TO SAY "word is not valid. Try again"
 		});
 	}
-	
+	// Write a function to run the word functions on submit
+	runApp(wordURL, word, definitionURL) {
+		this.verifyFirstWord(wordURL, word);
+		const wordflip = this.flipTheWord(word);
+		console.log(wordflip);
+		this.verifyFlippedWord(wordURL, wordflip);
+		const firstDefinition = this.definitionRequest(definitionURL, word);
+		console.log(firstDefinition);
+	}
 	// first API request to check if the submitted word is valid or not
 	verifyFirstWord(wordURL, word) {
 		this.runRequest(wordURL, word);
- 
-		// If the first word is valid, then flip the word.
-		// Check the flipped word is valid
-		// If the flipped word is valid, get the definition of the first and the flipped word
 	}	
+
+	// If the first word is valid, then flip the word.
+	flipTheWord(word) {
+		const flippedWord = this.flipWord(word);
+		console.log(flippedWord);
+		return flippedWord
+	}
+
+	// Check the flipped word is valid
+	verifyFlippedWord(wordURL, flippedWord) {
+		this.runRequest(wordURL, flippedWord);
+	}
+
+	// If the flipped word is valid, get the definition of the first and the flipped word
+	definitionRequest(definitionURL, wordToDefine) {
+		const define = this.runRequest(definitionURL, wordToDefine);
+		console.log(define);
+		return define;
+	}
+
 
 
 
@@ -128,8 +155,8 @@ class MainInput extends React.Component {
 				xmlToJSON: false
 			}
 		}).then((res) => {
-			let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
-			console.log(definition)
+			// let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
+			// console.log(definition)
 			// this.setState ({
 			// 	firstWordDefinition : definition
 			// })
@@ -150,7 +177,7 @@ class MainInput extends React.Component {
 		e.preventDefault();
 		console.log(this.state.firstWord)
 		const submittedWord = this.state.firstWord
-		this.verifyFirstWord(wordURL, submittedWord);
+		this.runApp(wordURL, submittedWord, definitionURL);
 	}
 	
    handleChange(e) {
