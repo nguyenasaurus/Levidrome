@@ -5,6 +5,8 @@ import Qs from 'qs';
 
 const key = 'b7b40e21fdccd7460635c749a5dbb44b';
 const id = 'a31a2791';
+const definitionURL = 'entries';
+const wordURL = 'inflections';
 
 class MainInput extends React.Component {
    constructor() {
@@ -20,10 +22,10 @@ class MainInput extends React.Component {
       this.verifyFirstWord = this.verifyFirstWord.bind(this);
 		this.checkDefinition = this.checkDefinition.bind(this);
 		this.flipWord = this.flipWord.bind(this);
+		this.runRequest = this.runRequest.bind(this);
 	}
 	
-	// first API request to check if the submitted word is valid or not
-	verifyFirstWord(word) {
+	runRequest(urlSection, word) {
 		axios({
 			method: 'GET',
 			url: 'https://proxy.hackeryou.com',
@@ -32,7 +34,7 @@ class MainInput extends React.Component {
 				return Qs.stringify(params, { arrayFormat: 'brackets' })
 			},
 			params: {
-				reqUrl: `https://od-api.oxforddictionaries.com/api/v1/inflections/en/${word}`,
+				reqUrl: `https://od-api.oxforddictionaries.com/api/v1/${urlSection}/en/${word}`,
 				proxyHeaders: {
 					'header_params': 'value',
 					'app_key': key,
@@ -40,23 +42,72 @@ class MainInput extends React.Component {
 				},
 				xmlToJSON: false
 			}
-		}).then((res) => {
-			// this is a real word
-			const checkWord = res.data.results[0].id;
-
-			const firstDefinition = this.checkDefinition(checkWord);
-			const wordFlipped = this.flipWord(checkWord);
-			const flippedDefinition = this.checkDefinition(wordFlipped);
-			this.setState ({
-				firstWordDefinition : firstDefinition,
-				flippedWord : wordFlipped,
-				flippedWordDefinition : flippedDefinition
-			})
+		}).then ((result) => {
+			console.log(result);
+			return result
 		}).catch((error) => {
-			console.log(error.response);
-			// POPUP MODULE TO SAY "word is not valid. Try again"
+				console.log(error.response);
+			// 	// POPUP MODULE TO SAY "word is not valid. Try again"
 		});
 	}
+	
+	// first API request to check if the submitted word is valid or not
+	verifyFirstWord(wordURL, word) {
+		this.runRequest(wordURL, word);
+ 
+		// If the first word is valid, then flip the word.
+		// Check the flipped word is valid
+		// If the flipped word is valid, get the definition of the first and the flipped word
+	}	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// .then((res) => {
+	// 	// this is a real word
+	// 	const checkWord = res.data.results[0].id;
+	// 	const firstDefinition = this.checkDefinition(checkWord);
+	// 	// const wordFlipped = this.flipWord(checkWord);
+	// 	// const flippedDefinition = this.checkDefinition(wordFlipped);
+	// 	this.setState ({
+	// 		firstWordDefinition : firstDefinition,
+	// 		// flippedWord : wordFlipped,
+	// 		// flippedWordDefinition : flippedDefinition
+	// 	})
+	// }).catch((error) => {
+	// 	console.log(error.response);
+	// 	// POPUP MODULE TO SAY "word is not valid. Try again"
+	// });
+	// else statement?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	//second API request to check for the definition of the first word
 	checkDefinition(word) {
@@ -79,9 +130,9 @@ class MainInput extends React.Component {
 		}).then((res) => {
 			let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
 			console.log(definition)
-			this.setState ({
-				firstWordDefinition : definition
-			})
+			// this.setState ({
+			// 	firstWordDefinition : definition
+			// })
 		})
 	}
 
@@ -93,11 +144,13 @@ class MainInput extends React.Component {
 	return flippedWord;
   }
 
+  	//run first API call again to check if flippedWord is valid
+
 	submitWord(e) {
 		e.preventDefault();
 		console.log(this.state.firstWord)
 		const submittedWord = this.state.firstWord
-		this.verifyFirstWord(submittedWord);
+		this.verifyFirstWord(wordURL, submittedWord);
 	}
 	
    handleChange(e) {
