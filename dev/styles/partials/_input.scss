@@ -1,5 +1,12 @@
 // INPUT FORM STYLES
 
 input {
-	background: $neutralGreen;
+    display: block;
+    margin: 0 auto;
+    background: $neutralGreen;
+    font-family: $primaryFont;
+    color: $primaryColor;
+    font-weight: 700;
+    font-size: 1.8rem;
+    text-align: center;
 }
