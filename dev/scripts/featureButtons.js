@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 export default class ListButton extends React.Component {
-   directToList() {
+   redirectToList() {
 
    }
    render() {
       return (
-         <button onClick={this.directToList}>Levidrome List</button>
+         <button onClick={this.redirectToList}>Levidrome List</button>
          // onClick direct the page to the Levidrome list component (list.js)
       )
    }
@@ -26,9 +26,12 @@ export class PlayAgain extends React.Component {
 }
 
 export class RandomPair extends React.Component {
+   randomLevidrome() {
+      
+   }
    render () {
       return (
-         <button onClick="">Give me a Levidrome</button>
+         <button onClick={this.randomLevidrome}>Give me a Levidrome</button>
          // onClick, run loop through levidrome list array and display a random pair of levidromes
       )
    }

@@ -2,9 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Qs from 'qs';
+import * as firebase from 'firebase';
 import { Link } from 'react-router-dom';
-
 import { PlayAgain , RandomPair } from './featureButtons'
+
+
+// Initialize Firebase
+var config = {
+apiKey: "AIzaSyBFxEo8gLNFkJ-sw5jCqGnewR3l9YInPs4",
+authDomain: "levidromeapp.firebaseapp.com",
+databaseURL: "https://levidromeapp.firebaseio.com",
+projectId: "levidromeapp",
+storageBucket: "",
+messagingSenderId: "231325881110"
+};
+firebase.initializeApp(config);
 
 
 const key = '10faf101cb01f99e61fe0358e0807373';
@@ -63,6 +75,10 @@ class MainInput extends React.Component {
 		this.verifyWord = this.verifyWord.bind(this);
 		this.flipWord = this.flipWord.bind(this);
 		this.getDefinition = this.getDefinition.bind(this);
+	}
+
+	componentDidMount () {
+		
 	}
 
 	handleChange(e) {
