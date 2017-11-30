@@ -11,6 +11,39 @@ const definitionURL = 'entries';
 const wordURL = 'inflections';
 // let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
 
+class LevidromeValidator extends React.Component {
+	constructor() {
+		super();
+		this.state={
+			definitions: []
+		}
+	}
+
+	addDefinition(definition) {
+		console.log(definition)
+		const newDefinitions = Array.from(this.state.definitions)
+		newDefinitions.push(definition)
+		this.setState({
+			definitions: newDefinitions
+		})
+	}
+
+	render() {
+		return (
+			<div>
+				{/* main input for word */}
+				<MainInput />
+
+				{/* adding definitions to page */}
+				{this.state.definitions.map((definition) => {
+					return <DisplayResults key={$} entry={definition} />
+				})}
+				
+			</div>
+		)
+	}
+}
+
 class MainInput extends React.Component {
 	constructor() {
 	super();
@@ -18,7 +51,8 @@ class MainInput extends React.Component {
 			firstWord : '',
 			firstDefinition : '',
 			flippedWord : '',
-			secondDefinition : ''
+			secondDefinition : '',
+			rootWords: []
 		}
 		this.submitWord = this.submitWord.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -28,9 +62,8 @@ class MainInput extends React.Component {
 	}
 
 	handleChange(e) {
-		const wordSubmitted = e.target.value
 		this.setState({
-			firstWord: wordSubmitted
+				firstWord: e.target.value
 		})
 	}
 
@@ -82,14 +115,27 @@ class MainInput extends React.Component {
 
 	submitWord(e) {
 		e.preventDefault();
+
 		//Get the word that was typed in and check if it is a real word
-		this.verifyWord(wordURL, this.state.firstWord)
+		this.verifyWord(wordURL, this.state.firstWord).then((res) => {
+			console.log(res.data.results[0].lexicalEntries[0].inflectionOf[0].id)
+			rootword = res.data.results[0].lexicalEntries[0].inflectionOf[0].id;
+			this.state.rootWords.push(rootword)
+			console.log(this.state.rootWords)
+		})
+
+		// for verify word - get the root word (which is object.ID)
 		
 		// flip the word
 		this.flipWord(this.state.firstWord);
 
 		//verify word
-		this.verifyWord(wordURL, this.state.flippedWord);
+		this.verifyWord(wordURL, this.state.flippedWord).then((res) => {
+			console.log(res.data.results[0].lexicalEntries[0].inflectionOf[0].id)
+			rootword = res.data.results[0].lexicalEntries[0].inflectionOf[0].id;
+			this.state.rootWords.push(rootword)
+			console.log(this.state.rootWords)
+		})
 		
 		// get definitions for first word
 		this.getDefinition(definitionURL, this.state.firstWord).then((firstDefinition) => {
@@ -132,5 +178,16 @@ class MainInput extends React.Component {
 	}
 }
 
+class DisplayResults extends React.Component {
+	constructor(props) {
+		super(props);
+	}
 
-export default MainInput
+	render() {
+		return (
+			<div>
+				{props.entry}
+			</div>
+		)
+	}
+}
