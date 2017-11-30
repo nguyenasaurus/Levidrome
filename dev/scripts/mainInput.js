@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Qs from 'qs';
 
-const key = 'b7b40e21fdccd7460635c749a5dbb44b';
-const id = 'a31a2791';
+const key = '10faf101cb01f99e61fe0358e0807373';
+//'b7b40e21fdccd7460635c749a5dbb44b'; first key
+const id = 'ba5599bf';
+//'a31a2791'; first id
 const definitionURL = 'entries';
 const wordURL = 'inflections';
 // let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
@@ -49,12 +51,13 @@ class MainInput extends React.Component {
 				},
 				xmlToJSON: false
 			}
-		}).then ((result) => {
+		}).then((result) => {
 			return result
-		}).catch((error) => {
-				console.log(error.response);
-			// 	// POPUP MODULE TO SAY "word is not valid. Try again"
-		});
+		})
+		// .catch((error) => {
+		// 	console.log(error.response);
+		// 	// 	// POPUP MODULE TO SAY "word is not valid. Try again"
+		// });
 	}
 
 	// first API request to check if the submitted word is valid or not
@@ -79,22 +82,31 @@ class MainInput extends React.Component {
 
 	submitWord(e) {
 		e.preventDefault();
-		//Get the word that was typed in
-		console.log(this.state.firstWord)
-
-		//check if it is a real word
+		//Get the word that was typed in and check if it is a real word
 		this.verifyWord(wordURL, this.state.firstWord)
 		
 		// flip the word
-		this.flipWord(this.state.firstWord)
-		console.log(this.state.flippedWord)
+		this.flipWord(this.state.firstWord);
 
-		// verify flipped word
-		this.verifyWord(wordURL,this.state.flippedWord)
+		//verify word
+		this.verifyWord(wordURL, this.state.flippedWord);
+		
+		// get definitions for first word
+		this.getDefinition(definitionURL, this.state.firstWord).then((firstDefinition) => {
+			firstDefinition = firstDefinition.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
+			console.log(firstDefinition)
+			this.setState({
+				firstDefinition
+			})
+		})
 
-		// get definitions for BOTH words
-		this.getDefinition(definitionURL, this.state.firstWord).then((data) => {
-			console.log(data)
+		// get definition for second word
+		this.getDefinition(definitionURL, this.state.flippedWord).then((secondDefinition) => {
+			secondDefinition = secondDefinition.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
+			console.log(secondDefinition)
+			this.setState({
+				secondDefinition
+			})
 		})
 	}
 
@@ -112,9 +124,9 @@ class MainInput extends React.Component {
 			<button type="submit">Submit</button>
 			</form>
 			{/* <FirstWordValidator submittedWord={this.state.firstWord} /> */}
-			<h2>{this.state.firstWordDefinition}</h2>
+			<h2>{this.state.firstDefinition}</h2>
 			<h3>{this.state.flippedWord}</h3>
-			<h3>{this.state.secondWordDefinition}</h3>
+			<h3>{this.state.secondDefinition}</h3>
 			</div>
 		)
 	}
