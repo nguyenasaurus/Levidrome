@@ -4,6 +4,9 @@ import axios from 'axios';
 import Qs from 'qs';
 import { Link } from 'react-router-dom';
 
+import { PlayAgain , RandomPair } from './featureButtons'
+
+
 const key = '10faf101cb01f99e61fe0358e0807373';
 //'b7b40e21fdccd7460635c749a5dbb44b'; first key
 const id = 'ba5599bf';
@@ -174,7 +177,9 @@ class MainInput extends React.Component {
 			<h2>{this.state.firstDefinition}</h2>
 			<h3>{this.state.flippedWord}</h3>
 			<h3>{this.state.secondDefinition}</h3>
-			</div>
+			<PlayAgain />
+			<RandomPair />
+		</div>
 		)
 	}
 }
