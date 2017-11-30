@@ -1,5 +1,29 @@
 // INPUT FORM STYLES
 
+// form {
+//     // border: 1px solid lime;
+// }
+
 input {
-	background: $neutralGreen;
+    display: block;
+    margin: 0 auto;
+    background: $neutralGreen;
+    font-family: $primaryFont;
+    color: $primaryColor;
+    font-weight: 700;
+    font-size: 1.8rem;
+    text-align: center;
+    border: 2px solid $secondaryColor;
+    // box-shadow: 
+    // border-radius:3px;
+}
+
+button {
+    font-family: $secondaryFont;
+    font-size: 1.2rem;
+    background: $secondaryColor;
+    color: $white;
+    // text-align: center;
+    display: block;
+    margin: 10px auto;
 }
