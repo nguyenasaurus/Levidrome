@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Qs from 'qs';
+import { Link } from 'react-router-dom';
 
 const key = '10faf101cb01f99e61fe0358e0807373';
 //'b7b40e21fdccd7460635c749a5dbb44b'; first key
@@ -11,7 +12,7 @@ const definitionURL = 'entries';
 const wordURL = 'inflections';
 // let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
 
-export class LevidromeValidator extends React.Component {
+export default class LevidromeValidator extends React.Component {
 	constructor() {
 		super();
 		this.state={

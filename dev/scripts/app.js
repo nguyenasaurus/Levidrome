@@ -15,10 +15,10 @@ class App extends React.Component {
       return (
         <Router> 
 				<div>
-					<h1>LEVIDROME</h1>
+					<h1>Levidrome Validator</h1>
 					{/* <MainInput /> */}
-					<Link to="/levidrome">MainInput</Link>
-					<Route exact path="/levidromvalidator" component={LevidromeValidator} />
+					<Link to="/levidromevalidator">MainInput</Link>
+					<Route exact path="/levidromevalidator" component={LevidromeValidator} />
 					<Link to="/about">About</Link>
 					<Route exact path="/about" component={About} />
 					<Link to="/list">List</Link>
@@ -32,18 +32,4 @@ class App extends React.Component {
 	}
 }
 
-// Text for about.js file
-// class About extends React.Component {
-//   render() {
-//     return (
-//       <section>
-//         <h3>What is a levidrome?</h3>
-//         <p>A levidrome, pronounced lev-ih-drome, is a word that spells another word backwards. They're littered throughout the english language, but it wasn't until Levi Budd from Vancouver, Canada, asked his parents for the accurate term to describe such a word, that they realized that such a term did not exist in the dictionary. Thus, levidrome was born, named after the inquisitive boy who was thought to ask his parents, "What do we call a word that spells another word backwards?".</p>
-//         {/* Video from the Budd family about Levidromes */}
-//         <iframe width="560" height="315" src="https://www.youtube.com/embed/jpZ3bh1R6Kk?rel=0" frameborder="0" allowfullscreen></iframe>
-//         <h3>Make 'levidrome' dictionary-worthy!</h3>
-//       </section>
-//     )
-//   }
-// }
 ReactDOM.render(<App />, document.getElementById('app'));
