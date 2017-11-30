@@ -1,18 +1,21 @@
 // COLORS
-$primaryColor: #452339ff;
-$secondaryColor: #35578cff;
+$primaryColor: rgba(69,35,67,0.85);
+$secondaryColor: rgba(53,87,140, 0.85);
 $white: white;
 $lightGrey:rgb(240, 240, 240);
 $grey: rgb(170, 170, 170);
 $darkGrey: rgb(95, 95, 95);
 $black: rgb(26, 26, 26);
 
-$accentBlue: #00bdf2ff;
-$accentRed: #d80a34ff;
-$accentGreen: #26d708ff;
+$accentBlue: rgb(0,189,242);
+$accentRed: rgb(216,10,52);
+$accentGreen: rgb(38,215,8);
 
-$neutralBlue: #a8d9ed76;
-$neutralGreen: #75b02141;
+// $neutralBlue: #a8d9ed76;
+// $neutralGreen: #75b02141;
+
+$neutralBlue: rgba(168, 217, 237, 0.5);
+$neutralGreen: rgba(117, 176, 33, 0.25);
 
 // FONTS
 $primaryFont: 'Quicksand', sans-serif;

@@ -1,12 +1,62 @@
 // FONT STYLING
 	// H1 font - title
 	// H2 font - subtitle/tagline
-	// H3 font - LEVIDROM TYPED WORD
+	// H3 font - LEVIDROME TYPED WORD
 	// H4 font - subtitle for paragraghs
 	// p general paragraph styling
 	// p definition styling extends p general w/added flare
 
+
+h1 {
+	font-family: $primaryFont;
+	color: $primaryColor;
+	font-size: 2.0rem;
+	text-align: center;
+	text-transform: uppercase;
+	text-shadow: 1px 4px 6px $neutralBlue,
+	0 0 0 #000, 1px 4px 6px $neutralBlue;
+	font-weight: 700;
+	margin: 0;
+}
+
+h2 {
+	font-family: $primaryFont;
+	color: $secondaryColor;
+	font-size: 1.2rem;
+	text-align: center;
+	// text-shadow: 1px 4px 6px $neutralBlue,
+	// 0 0 0 #000, 1px 4px 6px $neutralBlue;
+	margin: 0;
+}
+
+h3 {
+	font-family: $primaryFont;
+	color: $primaryColor;
+	text-transform: lowercase;
+	font-size: 1.6rem;
+	margin: 0;
+}
+
+h4 {
+	font-family: $secondaryFont;
+	color: $secondaryColor;
+	font-size: 1.3rem;
+	margin: 0;
+}
+
+p {
+	font-family: $secondaryFont;
+	color: $primaryColor;
+	font-size: 1.2rem;
+	margin: 0;
+}
+
 // LAYOUT
+body {
+	font-size: 62.5%;
+	background: $neutralBlue;
+}
+
 .wrapper {
 	width: 80%;
 	margin: 0 auto;
