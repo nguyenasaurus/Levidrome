@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Qs from 'qs';
 import { Link } from 'react-router-dom';
+
 import { PlayAgain , RandomPair } from './featureButtons'
+
 
 const key = '10faf101cb01f99e61fe0358e0807373';
 //'b7b40e21fdccd7460635c749a5dbb44b'; first key
