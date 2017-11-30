@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Qs from 'qs';
+import { Link } from 'react-router-dom';
+import { PlayAgain , RandomPair } from './featureButtons'
 
 const key = '10faf101cb01f99e61fe0358e0807373';
 //'b7b40e21fdccd7460635c749a5dbb44b'; first key
@@ -11,7 +13,7 @@ const definitionURL = 'entries';
 const wordURL = 'inflections';
 // let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
 
-export class LevidromeValidator extends React.Component {
+export default class LevidromeValidator extends React.Component {
 	constructor() {
 		super();
 		this.state={
@@ -173,7 +175,9 @@ class MainInput extends React.Component {
 			<h2>{this.state.firstDefinition}</h2>
 			<h3>{this.state.flippedWord}</h3>
 			<h3>{this.state.secondDefinition}</h3>
-			</div>
+			<PlayAgain />
+			<RandomPair />
+		</div>
 		)
 	}
 }
