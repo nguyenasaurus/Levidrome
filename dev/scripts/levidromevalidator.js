@@ -11,7 +11,7 @@ const definitionURL = 'entries';
 const wordURL = 'inflections';
 // let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
 
-class LevidromeValidator extends React.Component {
+export class LevidromeValidator extends React.Component {
 	constructor() {
 		super();
 		this.state={

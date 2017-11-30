@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MainInput from './MainInput';
+import LevidromeValidator from './levidromevalidator';
 import ResultsDisplay from './resultsDisplay';
 
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
@@ -17,8 +17,8 @@ class App extends React.Component {
 				<div>
 					<h1>LEVIDROME</h1>
 					{/* <MainInput /> */}
-					<Link to="/MainInput">MainInput</Link>
-					<Route exact path="/maininput" component={MainInput} />
+					<Link to="/levidrome">MainInput</Link>
+					<Route exact path="/levidromvalidator" component={LevidromeValidator} />
 					<Link to="/about">About</Link>
 					<Route exact path="/about" component={About} />
 					<Link to="/list">List</Link>
