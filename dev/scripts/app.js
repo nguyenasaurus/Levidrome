@@ -28,13 +28,15 @@ class App extends React.Component {
       return (
         <Router> 
 				<div>
-					<h1>Levidrome Validator</h1>
-					{/* <MainInput /> */}
-					<Nav />
-					<Link to="/levidromevalidator">MainInput</Link>
-					<Route exact path="/levidromevalidator" component={LevidromeValidator} />
-					<ListButton />
-
+					<h1>LEVIDROME</h1>
+          <Link to="/">Main</Link>
+          <Route exact path="/" component={LevidromeValidator} />
+					<Link to="/about">About</Link>
+					<Route exact path="/about" component={About} />
+					<Link to="/list">List</Link>
+					<Route exact path="/list" component={List} />
+					<Link to="/credits">Credits</Link>
+					<Route exact path="/credits" component={Credits} />
 				</div>
 			</Router>
 
