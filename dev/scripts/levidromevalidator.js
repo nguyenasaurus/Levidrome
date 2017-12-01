@@ -121,7 +121,6 @@ export default class LevidromeValidator extends React.Component {
 				}
 			)
 			})
-
 		}
 
 		getFlippedDef() {
@@ -146,22 +145,6 @@ export default class LevidromeValidator extends React.Component {
 				)
 			})
 		}
-		})
-	
-
-		const flippedRootWord = this.findRoot(flippedWord).then((flippedRoot) => {
-			this.setState({
-				flippedRootWord: flippedRoot
-			}), () => {
-				const flippedDef = this.getDefinition(this.state.flippedRootWord).then((definition2) => {
-					// get definition of flippedRoot
-					console.log(definition2);
-
-				})
-				// push definition into array
-			}
-		})
-		// console.log(this.state.firstWord)
 
 	render() {
 		return (
