@@ -30,11 +30,26 @@ export default class LevidromeValidator extends React.Component {
 	constructor() {
 		super();
 		this.state={
-			words:[],
+			flippedWord: '',
+			firstWord: '',
+			flippedFirstWord:'',
+			rootFirstWord: '',
+			rootFlippedWord:'',
+			rootWords: [],
 			definitions: []
 		}
-		this.verifyWord = this.verifyWord.bind(this);
 		this.getDefinition = this.getDefinition.bind(this);
+		this.flipWord = this.flipWord.bind(this);
+		this.levidrome = this.levidrome.bind(this);
+		this.rootFirst = this.rootFirst.bind(this);
+		this.runRequest = this.runRequest.bind(this);
+	}
+
+	flipWord(str) {
+		var splitString = str.split("");
+		var reverseArray = splitString.reverse();
+		var flippedWord = reverseArray.join("");
+		this.setState({flippedWord})
 	}
 
 	runRequest(urlSection, word) {
@@ -55,39 +70,63 @@ export default class LevidromeValidator extends React.Component {
 				xmlToJSON: false
 			}
 		}).then((result) => {
-			return console.log(result)
+			return result
 		})
 		// .catch((error) => {
-		// 	console.log(error.response);
+		// IF urlselection = wordURL display not a word therefore not not a levidrome
 		// 	// 	// POPUP MODULE TO SAY "word is not valid. Try again"
 		// });
 	}
 
 	// first API request to check if the submitted word is valid or not
-	verifyWord(words) {
-		console.log(words)
-		words.map((i) => {
-			this.runRequest(wordURL, i);
+	rootFirst(word) {
+		return this.runRequest(wordURL, word).then((i) => {
+			const rootFirstWord = i.data.results[0].lexicalEntries[0].inflectionOf[0].id
+			this.setState({rootFirstWord})
 		})
-
-		// return this.runRequest(wordURL, word);
 	}
 
 	// get definition function to run request
-	getDefinition(definitionURL, word) {
-		return this.runRequest(definitionURL, word);
+	getDefinition() {
+		this.state.rootWords.map((w) => {
+			this.runRequest(definitionURL, w);
+		})
+	}
+
+	//takes the firstWord from child component
+	levidrome(firstWord) {
+		// console.log(firstWord)
+		this.setState({firstWord})
+		// console.log(this.state.firstWord)
+		this.flipWord(this.state.firstWord)
+
+		console.log(this.state.firstWzord + ' ' + this.state.flippedWord)
+
+		// get root word of first word
+		this.rootFirst(this.state.firstWord)
+		console.log(this.state.rootFirstWord)
+
+		// flip root word
+
+		// call verifyword function to verify first word
+		// this.verifyWord();
 	}
 
 	render() {
 		return (
 			<div>
 				{/* main input for word */}
-				<MainInput submitWord={this.verifyWord} />
+				<MainInput submitWord={this.levidrome} />
 
-				{/* adding definitions to page */}
+				{/* adding word + flipped word to page */}
+				{/* {this.state.words.map((word) => {
+					console.log(word)
+					return <DisplayResults key={$} wordEntry={word} />
+				})} */}
+				{/* adding definitions to page
 				{this.state.definitions.map((definition) => {
-					return <DisplayResults key={$} entry={definition} />
-				})}
+					return <DisplayResults key={$} definitionEntry={definition} />
+				})} */}
 				
 			</div>
 		)
@@ -98,13 +137,10 @@ class MainInput extends React.Component {
 	constructor() {
 	super();
 		this.state = {
-			submittedWord: '',
-			flippedWord: '',
-			bothWords:[]
+			submittedWord: ''
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-		this.flipWord = this.flipWord.bind(this);
 	}
 
 	handleChange(e) {
@@ -113,25 +149,10 @@ class MainInput extends React.Component {
 		})
 	}
 
-	//write a function that takes the firstWord and flip it + put into array to send to parent
-	flipWord(str) {
-		var splitString = str.split("");
-		var reverseArray = splitString.reverse();
-		var flippedWord = reverseArray.join("");
-		this.state.bothWords = []
-		this.state.bothWords.push(this.state.submittedWord, flippedWord)
-		this.setState({
-			flippedWord
-		})
-	}
-
 	handleSubmit(e) {
 		e.preventDefault();
-		// flip the word
-		let flippedWord = this.flipWord(this.state.submittedWord)
-		// console.log(this.state.bothWords)
 		// prop this.state.bothWords to parent
-		this.props.submitWord(this.state.bothWords)
+		this.props.submitWord(this.state.submittedWord)
 	}
 
 	render() {
@@ -154,19 +175,14 @@ class MainInput extends React.Component {
 	}
 }
 
-class DisplayResults extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
-	render() {
+const DisplayResults = (props) => {
 		return (
-			<div>
-				{props.entry}
+			<div className="col-2">
+				{this.props.wordEntry}
+				{/* {this.props.definitionEntry} */}
 			</div>
 		)
 	}
-}
 
 
 
