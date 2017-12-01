@@ -79,10 +79,9 @@ export default class LevidromeValidator extends React.Component {
 	}
 
 	// first API request to check if the submitted word is valid or not
-	rootFirst(word) {
+	findRoot(word) {
 		return this.runRequest(wordURL, word).then((i) => {
-			const rootFirstWord = i.data.results[0].lexicalEntries[0].inflectionOf[0].id
-			this.setState({rootFirstWord})
+			const rootWord = i.data.results[0].lexicalEntries[0].inflectionOf[0].id
 		})
 	}
 
@@ -100,16 +99,9 @@ export default class LevidromeValidator extends React.Component {
 		// console.log(this.state.firstWord)
 		this.flipWord(this.state.firstWord)
 
-		console.log(this.state.firstWzord + ' ' + this.state.flippedWord)
+		console.log(this.state.firstWord + ' ' + this.state.flippedWord)
 
-		// get root word of first word
-		this.rootFirst(this.state.firstWord)
-		console.log(this.state.rootFirstWord)
-
-		// flip root word
-
-		// call verifyword function to verify first word
-		// this.verifyWord();
+		// 
 	}
 
 	render() {
