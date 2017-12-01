@@ -126,12 +126,6 @@ export default class LevidromeValidator extends React.Component {
 		})
 		// console.log(this.state.firstWord)
 
-		// flip root word
-
-		// call verifyword function to verify first word
-		// this.verifyWord();
-	})}
-
 	render() {
 		return (
 			<div>
