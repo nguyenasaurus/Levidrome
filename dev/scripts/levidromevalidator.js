@@ -41,6 +41,7 @@ export default class LevidromeValidator extends React.Component {
 		this.levidrome = this.levidrome.bind(this);
 		this.findRoot = this.findRoot.bind(this);
 		this.runRequest = this.runRequest.bind(this);
+		this.getFlippedDef = this.getFlippedDef.bind(this);
 	}
 
 
@@ -95,20 +96,56 @@ export default class LevidromeValidator extends React.Component {
 	//takes the firstWord from child component
 	levidrome(firstWord) {
 		// console.log(firstWord)
+		this.setState({definitions: []})
 		const flippedWord = this.flipWord(firstWord)
+		console.log(firstWord)
+		console.log(flippedWord)
 		//runRequest to verify the entered words are valid.Store the root words, which are the 'id' property into firstRootWord and flippedRootWord and push them into the rootWords Array.
-		const firstRootWord = this.findRoot(firstWord).then((firstRoot) => {
-		this.setState ({
-			firstWord,
-			flippedWord,
-			firstRootWord : firstRoot
-		}, () => {
-			const firstDef = this.getDefinition(this.state.firstRootWord).then((definition) => {
-				// push into definition array
-				const newDef = Array.from(this.state.definitions)
-				newDef.push(definition)
-				this.setState({ definitions : newDef})
+		const firstRootWord = this.findRoot(firstWord)
+			.then((firstRoot) => {
+				this.setState({
+					firstWord,
+					flippedWord,
+					firstRootWord : firstRoot
+				}, () => {
+					const firstDef = this.getDefinition(this.state.firstRootWord)
+					.then((definition) => {
+						// clear array and then push definitions into definition array
+						
+						const newDef = [];
+						newDef.push(definition)
+						console.log('definition', definition);
+						this.setState({ definitions : newDef});
+						this.getFlippedDef();
+					})
+				}
+			)
 			})
+
+		}
+
+		getFlippedDef() {
+			const flippedRootWord = this.findRoot(this.state.flippedWord)
+			.then((flippedRoot) => {
+				console.log('flippedword', this.state.flippedWord)
+					this.setState({
+						flippedRootWord: flippedRoot
+					}, () => {
+						// get definition of flippedRoot
+						const flippedDef = this.getDefinition(this.state.flippedRootWord)
+						.then((definition2) => {
+							// push definition into array
+
+							const newDef2 = Array.from(this.state.definitions);
+							console.log('newDef2 before',newDef2);
+							newDef2.push(definition2)
+							console.log('newDef2',newDef2);
+							this.setState({ definitions : newDef2})
+						})
+					}
+				)
+			})
+		}
 		})
 	
 
