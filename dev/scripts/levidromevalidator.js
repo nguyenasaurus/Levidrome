@@ -30,27 +30,19 @@ export default class LevidromeValidator extends React.Component {
 	constructor() {
 		super();
 		this.state={
-			flippedWord: '',
 			firstWord: '',
-			flippedFirstWord:'',
-			rootFirstWord: '',
-			rootFlippedWord:'',
-			rootWords: [],
+			flippedWord: '',
+			firstRootWord: '',
+			flippedRootWord:'',
 			definitions: []
 		}
 		this.getDefinition = this.getDefinition.bind(this);
 		this.flipWord = this.flipWord.bind(this);
 		this.levidrome = this.levidrome.bind(this);
-		this.rootFirst = this.rootFirst.bind(this);
+		this.findRoot = this.findRoot.bind(this);
 		this.runRequest = this.runRequest.bind(this);
 	}
 
-	flipWord(str) {
-		var splitString = str.split("");
-		var reverseArray = splitString.reverse();
-		var flippedWord = reverseArray.join("");
-		this.setState({flippedWord})
-	}
 
 	runRequest(urlSection, word) {
 		return axios({
@@ -81,28 +73,58 @@ export default class LevidromeValidator extends React.Component {
 	// first API request to check if the submitted word is valid or not
 	findRoot(word) {
 		return this.runRequest(wordURL, word).then((i) => {
-			const rootWord = i.data.results[0].lexicalEntries[0].inflectionOf[0].id
+			return i.data.results[0].lexicalEntries[0].inflectionOf[0].id
 		})
 	}
 
 	// get definition function to run request
-	getDefinition() {
-		this.state.rootWords.map((w) => {
-			this.runRequest(definitionURL, w);
+	getDefinition(word) {
+		return this.runRequest(definitionURL, word).then((i) => {
+			return i.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
 		})
+		// let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
+	}
+
+	flipWord(str) {
+		var splitString = str.split("");
+		var reverseArray = splitString.reverse();
+		var flippedWord = reverseArray.join("");
+		return flippedWord
 	}
 
 	//takes the firstWord from child component
 	levidrome(firstWord) {
 		// console.log(firstWord)
-		this.setState({firstWord})
+		const flippedWord = this.flipWord(firstWord)
+		//runRequest to verify the entered words are valid.Store the root words, which are the 'id' property into firstRootWord and flippedRootWord and push them into the rootWords Array.
+		const firstRootWord = this.findRoot(firstWord).then((firstRoot) => {
+		this.setState ({
+			firstWord,
+			flippedWord,
+			firstRootWord : firstRoot
+		}, () => {
+			const firstDef = this.getDefinition(this.state.firstRootWord).then((definition) => {
+				// push into definition array
+				const newDef = Array.from(this.state.definitions)
+				newDef.push(definition)
+				this.setState({ definitions : newDef})
+			})
+		})
+	
+
+		const flippedRootWord = this.findRoot(flippedWord).then((flippedRoot) => {
+			this.setState({
+				flippedRootWord: flippedRoot
+			}), () => {
+				const flippedDef = this.getDefinition(this.state.flippedRootWord).then((definition2) => {
+					// get definition of flippedRoot
+					console.log(definition2);
+
+				})
+				// push definition into array
+			}
+		})
 		// console.log(this.state.firstWord)
-		this.flipWord(this.state.firstWord)
-
-		console.log(this.state.firstWord + ' ' + this.state.flippedWord)
-
-		// 
-	}
 
 	render() {
 		return (
