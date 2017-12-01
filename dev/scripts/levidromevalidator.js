@@ -34,7 +34,9 @@ export default class LevidromeValidator extends React.Component {
 			flippedWord: '',
 			firstRootWord: '',
 			flippedRootWord:'',
-			definitions: []
+			definitions: [],
+			word : '',
+			pairedWord : ''
 		}
 		this.getDefinition = this.getDefinition.bind(this);
 		this.flipWord = this.flipWord.bind(this);
@@ -42,8 +44,8 @@ export default class LevidromeValidator extends React.Component {
 		this.findRoot = this.findRoot.bind(this);
 		this.runRequest = this.runRequest.bind(this);
 		this.getFlippedDef = this.getFlippedDef.bind(this);
+		this.addToFirebase = this.addToFirebase.bind(this);
 	}
-
 
 	runRequest(urlSection, word) {
 		return axios({
@@ -65,10 +67,11 @@ export default class LevidromeValidator extends React.Component {
 		}).then((result) => {
 			return result
 		})
-		// .catch((error) => {
+		.catch((error) => {
+			console.log('errorrrr')
 		// IF urlselection = wordURL display not a word therefore not not a levidrome
-		// 	// 	// POPUP MODULE TO SAY "word is not valid. Try again"
-		// });
+			// 	// POPUP MODULE TO SAY "word is not valid. Try again"
+		});
 	}
 
 	// first API request to check if the submitted word is valid or not
@@ -114,9 +117,10 @@ export default class LevidromeValidator extends React.Component {
 						
 						const newDef = [];
 						newDef.push(definition)
-						console.log('definition', definition);
+						// console.log('definition', definition);
 						this.setState({ definitions : newDef});
 						this.getFlippedDef();
+
 					})
 				}
 			)
@@ -126,7 +130,7 @@ export default class LevidromeValidator extends React.Component {
 		getFlippedDef() {
 			const flippedRootWord = this.findRoot(this.state.flippedWord)
 			.then((flippedRoot) => {
-				console.log('flippedword', this.state.flippedWord)
+				// console.log('flippedword', this.state.flippedWord)
 					this.setState({
 						flippedRootWord: flippedRoot
 					}, () => {
@@ -136,14 +140,29 @@ export default class LevidromeValidator extends React.Component {
 							// push definition into array
 
 							const newDef2 = Array.from(this.state.definitions);
-							console.log('newDef2 before',newDef2);
+							// console.log('newDef2 before',newDef2);
 							newDef2.push(definition2)
-							console.log('newDef2',newDef2);
+							// console.log('newDef2',newDef2);
 							this.setState({ definitions : newDef2})
+							console.log(this.state.definitions)
+							if (this.state.definitions.length === 2) {
+								this.addToFirebase();
+							}
 						})
 					}
 				)
 			})
+		}
+
+		addToFirebase() {
+			const dbRef = firebase.database().ref()
+			
+			dbRef.push(
+				{
+					firstWord: this.state.firstWord,
+					flippedWord: this.state.flippedWord
+				}
+			);
 		}
 
 	render() {
@@ -152,15 +171,12 @@ export default class LevidromeValidator extends React.Component {
 				{/* main input for word */}
 				<MainInput submitWord={this.levidrome} />
 
-				{/* adding word + flipped word to page */}
-				{/* {this.state.words.map((word) => {
-					console.log(word)
-					return <DisplayResults key={$} wordEntry={word} />
-				})} */}
-				{/* adding definitions to page
+				<h3> {this.state.flippedWord}</h3>
+				{/* adding definitions to page*/}
 				{this.state.definitions.map((definition) => {
-					return <DisplayResults key={$} definitionEntry={definition} />
-				})} */}
+					return <p>{definition}</p>
+					{console.log(definition)}
+					})} 
 				
 			</div>
 		)
@@ -208,15 +224,6 @@ class MainInput extends React.Component {
 		)
 	}
 }
-
-const DisplayResults = (props) => {
-		return (
-			<div className="col-2">
-				{this.props.wordEntry}
-				{/* {this.props.definitionEntry} */}
-			</div>
-		)
-	}
 
 
 
