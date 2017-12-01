@@ -9,8 +9,9 @@ class List extends React.Component {
       return (
 
          <div>
-            <h2>List</h2>
-            <Link to="/">Main</Link>
+            <p>Filler Text</p>
+            {/* <h2>List</h2>
+            <Link to="/">Main</Link> */}
 
          </div>
 

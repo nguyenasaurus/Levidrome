@@ -6,7 +6,7 @@ class Credits extends React.Component {
    render () {
       return (
          <div>
-            <Link to="/">Main</Link>
+            {/* <Link to="/">Main</Link> */}
             <section>
                 <h2>Credits</h2>
                 <p>This validator was created using the Oxford English Dictionary API. Credits go to the HackerYou instructor team for coming up with the idea for this project, and to Levi Budd and the Budd family for discovering and spreading the levidrome love.</p>

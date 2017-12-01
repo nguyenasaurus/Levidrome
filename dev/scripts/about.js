@@ -9,7 +9,7 @@ class About extends React.Component {
 			<div>
 				<header>
 					<h2>About</h2>
-					<Link to="/">Main</Link>
+					{/* <Link to="/">Main</Link> */}
 				</header>
 				<section>
 					<h3>What is a levidrome?</h3>

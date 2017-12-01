@@ -11,11 +11,13 @@ import  ListButton  from './featureButtons';
 const Nav = () => {
 	return (
 		<nav>
+			<Link to="/">Main</Link>
 			<Link to="/about">About</Link>
-			<Route exact path="/about" component={About} />
 			<Link to="/list">List</Link>
-			<Route exact path="/list" component={List} />
 			<Link to="/credits">Credits</Link>
+			<Route exact path="/" component={LevidromeValidator} />
+			<Route exact path="/about" component={About} />
+			<Route exact path="/list" component={List} />
 			<Route exact path="/credits" component={Credits} />
 		</nav>
 	)
@@ -28,15 +30,16 @@ class App extends React.Component {
       return (
         <Router> 
 				<div>
-					<h1>LEVIDROME</h1>
-          <Link to="/">Main</Link>
-          <Route exact path="/" component={LevidromeValidator} />
+					<h1>Levidrome <br/>Validator</h1>
+					<Nav />
+          {/* <Link to="/">Main</Link>
 					<Link to="/about">About</Link>
-					<Route exact path="/about" component={About} />
 					<Link to="/list">List</Link>
-					<Route exact path="/list" component={List} />
 					<Link to="/credits">Credits</Link>
-					<Route exact path="/credits" component={Credits} />
+          <Route exact path="/" component={LevidromeValidator} />
+					<Route exact path="/about" component={About} />
+					<Route exact path="/list" component={List} />
+					<Route exact path="/credits" component={Credits} /> */}
 				</div>
 			</Router>
 
