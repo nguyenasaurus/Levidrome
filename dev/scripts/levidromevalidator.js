@@ -100,7 +100,7 @@ export default class LevidromeValidator extends React.Component {
 		// console.log(this.state.firstWord)
 		this.flipWord(this.state.firstWord)
 
-		console.log(this.state.firstWzord + ' ' + this.state.flippedWord)
+		console.log(this.state.firstWord + ' ' + this.state.flippedWord)
 
 		// get root word of first word
 		this.rootFirst(this.state.firstWord)
