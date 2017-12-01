@@ -7,23 +7,24 @@
 input {
     display: block;
     margin: 0 auto;
-    background: $neutralGreen;
+    background: $neutralBlue;
     font-family: $primaryFont;
     color: $primaryColor;
     font-weight: 700;
     font-size: 1.8rem;
     text-align: center;
-    border: 2px solid $secondaryColor;
+    border: 2px solid $neutralBlue;
     // box-shadow: 
     // border-radius:3px;
 }
 
 button {
-    font-family: $secondaryFont;
+    font-family: $primaryFont;
     font-size: 1.2rem;
-    background: $secondaryColor;
+    background: $primaryColor;
     color: $white;
-    // text-align: center;
+    padding: 5px 15px;
     display: block;
     margin: 10px auto;
+    border: 2px solid $neutralBlue;
 }

@@ -10,12 +10,12 @@
 h1 {
 	font-family: $primaryFont;
 	// color: $primaryColor;
-	color: rgb(168, 217, 237);
+	color: $neutralBlue;
 	font-size: 2.4rem;
 	text-align: center;
 	text-transform: uppercase;
-	// text-shadow: 1px 4px 6px $neutralBlue,
-	// 0 0 0 #000, 1px 4px 6px $neutralBlue;
+	text-shadow: 1px 1px 1px $white,
+	0 0 0 #000, 1px 1px 1px $white;
 	// text-shadow: 1px 4px 6px $primaryColor,
 	// 0 0 0 #000, 1px 4px 6px $primaryColor;
 	font-weight: 700;
@@ -24,7 +24,7 @@ h1 {
 
 h2 {
 	font-family: $primaryFont;
-	color: $secondaryColor;
+	color: $primaryColor;
 	font-size: 1.2rem;
 	text-align: center;
 	// text-shadow: 1px 4px 6px $neutralBlue,
@@ -54,6 +54,15 @@ p {
 	margin: 0;
 }
 
+a {
+	color: $white;
+	font-family: $primaryFont;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	// font-weight: 700;
+	font-size: 1.2rem;
+	text-decoration: none;
+}
 // LAYOUT
 body {
 	font-size: 62.5%;
