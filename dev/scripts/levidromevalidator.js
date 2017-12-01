@@ -96,7 +96,7 @@ export default class LevidromeValidator extends React.Component {
 	//takes the firstWord from child component
 	levidrome(firstWord) {
 		// console.log(firstWord)
-		this.setState({ definitions: [] })
+		this.setState({definitions: []})
 		const flippedWord = this.flipWord(firstWord)
 		console.log(firstWord)
 		console.log(flippedWord)
@@ -106,45 +106,45 @@ export default class LevidromeValidator extends React.Component {
 				this.setState({
 					firstWord,
 					flippedWord,
-					firstRootWord: firstRoot
+					firstRootWord : firstRoot
 				}, () => {
 					const firstDef = this.getDefinition(this.state.firstRootWord)
-						.then((definition) => {
-							// clear array and then push definitions into definition array
-
-							const newDef = [];
-							newDef.push(definition)
-							console.log('definition', definition);
-							this.setState({ definitions: newDef });
-							this.getFlippedDef();
-						})
+					.then((definition) => {
+						// clear array and then push definitions into definition array
+						
+						const newDef = [];
+						newDef.push(definition)
+						console.log('definition', definition);
+						this.setState({ definitions : newDef});
+						this.getFlippedDef();
+					})
 				}
-				)
+			)
 			})
-	}
+		}
 
-	getFlippedDef() {
-		const flippedRootWord = this.findRoot(this.state.flippedWord)
+		getFlippedDef() {
+			const flippedRootWord = this.findRoot(this.state.flippedWord)
 			.then((flippedRoot) => {
 				console.log('flippedword', this.state.flippedWord)
-				this.setState({
-					flippedRootWord: flippedRoot
-				}, () => {
-					// get definition of flippedRoot
-					const flippedDef = this.getDefinition(this.state.flippedRootWord)
+					this.setState({
+						flippedRootWord: flippedRoot
+					}, () => {
+						// get definition of flippedRoot
+						const flippedDef = this.getDefinition(this.state.flippedRootWord)
 						.then((definition2) => {
 							// push definition into array
 
 							const newDef2 = Array.from(this.state.definitions);
-							console.log('newDef2 before', newDef2);
+							console.log('newDef2 before',newDef2);
 							newDef2.push(definition2)
-							console.log('newDef2', newDef2);
-							this.setState({ definitions: newDef2 })
+							console.log('newDef2',newDef2);
+							this.setState({ definitions : newDef2})
 						})
-				}
+					}
 				)
 			})
-	}
+		}
 
 	render() {
 		return (
