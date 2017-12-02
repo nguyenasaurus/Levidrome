@@ -1,0 +1,33 @@
+// HEADER STYLES
+main {
+    clear: both;
+}
+
+header {
+    border: 1px solid pink;
+}
+
+ul {
+    // display: inline-block;
+    list-style: none;
+    border: 1px solid lime;
+    text-align: center;
+    padding: 0;
+    margin: 30px 0px 30px 10px;
+    float: right;
+}
+
+li {
+    border: 1px solid red;
+    display: inline-block;
+    margin: 0 30px;
+}
+
+li:last-of-type {
+    margin-right: 0;
+}
+
+.headerSection {
+    font-size: 1.2rem;
+}
+
