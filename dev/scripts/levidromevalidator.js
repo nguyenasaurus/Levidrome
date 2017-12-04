@@ -4,8 +4,6 @@ import axios from 'axios';
 import Qs from 'qs';
 import * as firebase from 'firebase';
 import { Link } from 'react-router-dom';
-
-import { PlayAgain , RandomPair } from './featureButtons';
 import List from './list'
 
 // import { PlayAgain, RandomPair } from './featureButtons'
@@ -51,27 +49,6 @@ export default class LevidromeValidator extends React.Component {
 		this.runRequest = this.runRequest.bind(this);
 		this.getFlippedDef = this.getFlippedDef.bind(this);
 		this.addToFirebase = this.addToFirebase.bind(this);
-	}
-
-
-	//retrive info from firebase to display in levidrome list
-	componentDidMount () {
-		const dbRef = firebase.database().ref()
-
-		dbRef.on('value', (firebaseData) => {
-			// console.log(firebaseData.val());
-			const pairArray = [];
-			const levidromeData = firebaseData.val();
-
-			for (let itemsKey in levidromeData) {
-				pairArray.push(levidromeData[itemsKey])
-			}
-			this.setState ({
-				storedItems : pairArray
-			});
-			console.log(this.state.storedItems);
-		})
-		
 	}
 
 	runRequest(urlSection, word) {
@@ -252,24 +229,6 @@ class MainInput extends React.Component {
 
 	render() {
 		return (
-
-		<div>
-			<form action="" 
-			onSubmit={this.handleSubmit}>
-			<input type="text" 
-			className="firstWord" 
-			onChange ={this.handleChange}
-			value={this.state.firstWord}/>
-			<button type="submit">Submit</button>
-			</form>
-			
-          
-			{/* <List /> put the levidrome list return function in List eventually */}
-			<PlayAgain />
-			<RandomPair />
-
-		</div>
-
 			<div className="row levidrome">
 				<div className="wrapper">
 					<form action=""	className="col-2" onSubmit={this.handleSubmit}>
@@ -293,30 +252,3 @@ class MainInput extends React.Component {
 		)
 	}
 }
-
-
-
-// //verify word
-// this.verifyWord(wordURL, this.state.flippedWord).then((res) => {
-// 	console.log(res.data.results[0].lexicalEntries[0].inflectionOf[0].id)
-// 	rootword = res.data.results[0].lexicalEntries[0].inflectionOf[0].id;
-// 	this.state.rootWords.push(rootword)
-// 	console.log(this.state.rootWords)
-// })
-
-// // get definitions for first word
-// this.getDefinition(definitionURL, this.state.firstWord).then((firstDefinition) => {
-// 	firstDefinition = firstDefinition.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
-// 	console.log(firstDefinition)
-// 	this.setState({
-// 		firstDefinition
-// 	})
-// })
-
-//Get the word that was typed in and check if it is a real word
-// this.verifyWord(wordURL, this.state.firstWord).then((res) => {
-// 	console.log(res.data.results[0].lexicalEntries[0].inflectionOf[0].id)
-// 	rootword = res.data.results[0].lexicalEntries[0].inflectionOf[0].id;
-// 	this.state.rootWords.push(rootword)
-// 	console.log(this.state.rootWords)
-// })

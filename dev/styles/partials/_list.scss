@@ -1,0 +1,12 @@
+ul.levidromeList {
+	color: white;
+	@extend h3;
+	@extend .row;
+	.pairing {
+		@extend .row;
+		margin: 10px auto;
+		.col-2 {
+			width: 40%;
+		}
+	}
+}
