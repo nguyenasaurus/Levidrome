@@ -3,51 +3,45 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import * as firebase from 'firebase';
 
-
-
-
-
-
-
-
 class List extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            storedItems:[],
-            uniquePairs: [],
-        }
+   constructor() {
+      super();
+      this.state = {
+         storedItems:[],
+         uniquePairs: [],
+      }
     }
+
     //retrive info from firebase to display in levidrome list
     componentDidMount() {
-        const dbRef = firebase.database().ref()
+      const dbRef = firebase.database().ref()
 
-        dbRef.on('value', (firebaseData) => {
-            const pairArray = [];
-            const levidromeData = firebaseData.val();
+      dbRef.on('value', (firebaseData) => {
+         console.log('cow');
+         console.log(firebaseData.val());
+         const pairArray = [];
+         const levidromeData = firebaseData.val();
 
-            for (let itemsKey in levidromeData) {
-                pairArray.push(levidromeData[itemsKey])
+         for (let itemsKey in levidromeData) {
+            pairArray.push(levidromeData[itemsKey])
+         }
+         this.setState({
+            storedItems: pairArray
+         });            
+         
+         let words = pairArray;
+         let uniquePairs = [];
+
+         words.forEach((pair) => {
+            // console.log(pair)
+            let i = uniquePairs.findIndex(x => x.firstWord == pair.firstWord);
+            if (i <= -1) {
+               uniquePairs.push({firstWord: pair.firstWord, flippedWord: pair.flippedWord})
             }
-            this.setState({
-                storedItems: pairArray
-            });            
-            
-            let words = this.state.storedItems;
-            let uniquePairs = [];
-
-            words.filter((pair) => {
-                // console.log(pair)
-                let i = uniquePairs.findIndex(x => x.firstWord == pair.firstWord);
-                if (i <= -1) {
-                    uniquePairs.push({firstWord: pair.firstWord, flippedWord: pair.flippedWord})
-                    this.setState({ uniquePairs })
-                }
-            })
-            console.log(this.state.uniquePairs)
-        });
-
-        
+         })
+         this.setState({ uniquePairs })
+         console.log(this.state.uniquePairs)
+      });
     }
 
     render() {
@@ -57,10 +51,10 @@ class List extends React.Component {
                     <ul className="levidromeList">
                         {this.state.uniquePairs.map((pair) => {
                         return (
-                            <li className="pairing">
-                                <li className="col-2">{pair.firstWord}</li>
-                                <li className="col-2">{pair.flippedWord}</li>
-                            </li>
+                           <li className="pairing">
+                              <li className="col-2">{pair.firstWord}</li>
+                              <li className="col-2">{pair.flippedWord}</li>
+                           </li>
                         )
                         })}
                     </ul>
