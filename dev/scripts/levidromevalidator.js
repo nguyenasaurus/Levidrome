@@ -4,17 +4,17 @@ import axios from 'axios';
 import Qs from 'qs';
 import * as firebase from 'firebase';
 import { Link } from 'react-router-dom';
-import { PlayAgain , RandomPair } from './featureButtons'
+// import { PlayAgain, RandomPair } from './featureButtons'
 
 
 // Initialize Firebase
 var config = {
-apiKey: "AIzaSyBFxEo8gLNFkJ-sw5jCqGnewR3l9YInPs4",
-authDomain: "levidromeapp.firebaseapp.com",
-databaseURL: "https://levidromeapp.firebaseio.com",
-projectId: "levidromeapp",
-storageBucket: "",
-messagingSenderId: "231325881110"
+	apiKey: "AIzaSyBFxEo8gLNFkJ-sw5jCqGnewR3l9YInPs4",
+	authDomain: "levidromeapp.firebaseapp.com",
+	databaseURL: "https://levidromeapp.firebaseio.com",
+	projectId: "levidromeapp",
+	storageBucket: "",
+	messagingSenderId: "231325881110"
 };
 firebase.initializeApp(config);
 
@@ -29,7 +29,7 @@ const wordURL = 'inflections';
 export default class LevidromeValidator extends React.Component {
 	constructor() {
 		super();
-		this.state={
+		this.state = {
 			firstWord: '',
 			flippedWord: '',
 			firstRootWord: '',
@@ -169,25 +169,35 @@ export default class LevidromeValidator extends React.Component {
 		return (
 			<div>
 				{/* main input for word */}
-				<MainInput submitWord={this.levidrome} />
-
-				<h3> {this.state.flippedWord}</h3>
+				<MainInput submitWord={this.levidrome} displayFlipped={this.state.flippedWord} />
 				{/* adding definitions to page*/}
-				{this.state.definitions.map((definition) => {
-					return <p>{definition}</p>
-					{console.log(definition)}
-					})} 
-				
+				<div className="row">
+					<div className="wrapper displayDefinitions">
+						{this.state.definitions.map((definition) => {
+							return <DisplayDefinitions display={definition}/>
+						})}
+					</div>
+				</div>
 			</div>
 		)
 	}
 }
 
+const DisplayDefinitions = (props) => {
+	return (
+				<div className="col-2"> 
+					<p>{props.display}</p>
+				</div>
+	)
+}
+
+
+
 class MainInput extends React.Component {
 	constructor() {
-	super();
+		super();
 		this.state = {
-			submittedWord: ''
+			submittedWord: '',
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -195,7 +205,7 @@ class MainInput extends React.Component {
 
 	handleChange(e) {
 		this.setState({
-				submittedWord: e.target.value,
+			submittedWord: e.target.value,
 		})
 	}
 
@@ -207,20 +217,25 @@ class MainInput extends React.Component {
 
 	render() {
 		return (
-		<div>
-			<form action="" 
-			onSubmit={this.handleSubmit}>
-			<input type="text" 
-			className="firstWord" 
-			onChange ={this.handleChange}
-			value={this.state.firstWord}/>
-			<button type="submit">Submit</button>
-			</form>
+			<div className="row levidrome">
+				<div className="wrapper">
+					<form action=""	className="col-2" onSubmit={this.handleSubmit}>
+						<input type="text"
+							className="firstWord"
+							onChange={this.handleChange}
+							value={this.state.firstWord} />
+						<div className="relative">
+							<button className="button" type="submit">Submit</button>
+						</div>
+					</form>
+					<div className="col-2">
+						<input type="text" className="secondWord" value={this.props.displayFlipped}/>
+					</div>
 
-			<PlayAgain />
-			<RandomPair />
-
-		</div>
+				{/* <PlayAgain />
+				<RandomPair /> */}
+				</div>
+			</div>
 		)
 	}
 }
