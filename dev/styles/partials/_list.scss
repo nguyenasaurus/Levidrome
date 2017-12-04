@@ -5,8 +5,17 @@ ul.levidromeList {
 	.pairing {
 		@extend .row;
 		margin: 10px auto;
+		position: relative;
+		&::after {
+			content: '\f0ec';
+			font-family: FontAwesome;
+			display: block;
+			position: absolute;
+			left: 45%;
+			right: 50%;
+		}
 		.col-2 {
 			width: 40%;
 		}
 	}
-}
+};
