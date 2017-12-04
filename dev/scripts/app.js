@@ -7,7 +7,7 @@ import List from './list';
 import About from './about';
 import Credits from './credits';
 
-const Nav = () => {
+export const Nav = () => {
 	return (
 		<nav>
 			<ul className="headerSection">
@@ -18,7 +18,7 @@ const Nav = () => {
 	)
 }
 
-const FooterNav = () => {
+export const FooterNav = () => {
 	return (
 		<nav>
 			<ul className="footerSection">
@@ -35,24 +35,17 @@ const FooterNav = () => {
 class App extends React.Component {
     render() {
       return (
-        <Router> 
+				<Router> 
 					<div>
-						<header className="clearfix">
-							<div className="wrapper">
-								<Link to="/"><h1>Levidrome Validator</h1></Link>
-								<Nav />
-							</div>
-						</header>
-						<main>
+						<main className="levidrome">
+							<h1>Levidrome Validator</h1>
 							<Route exact path="/" component={LevidromeValidator} />
+						</main>
 							<Route exact path="/about" component={About} />
 							<Route exact path="/list" component={List} />
 							<Route exact path="/credits" component={Credits} />
-						</main>
-						<footer className="clearfix">
-							<div className="wrapper">
-								<FooterNav />
-							</div>
+						<footer className="footer clearfix">
+							<FooterNav />
 						</footer>
 					</div>
 				</Router>

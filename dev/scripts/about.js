@@ -1,12 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom';
+import { Nav, FooterNav } from './app'
 
 class About extends React.Component {
-       render() {
-          return (
+	render() {
+		return (
+			<div>
+			<header className="clearfix">
+				<div className="wrapper">
+					<Link to="/"><h1>Levidrome Validator</h1></Link>
+					<Nav />
+				</div>
+			</header>
 			<div className="wrapper">
-				{/* <h2>About</h2> */}
 				<section className="aboutLevidrome clearfix">
 					<h3>What is a levidrome?</h3>
 					<div className="col-2">
@@ -27,7 +34,7 @@ class About extends React.Component {
 					</div>
 				</section>
 			</div>
-
+			</div>
 		)
 	}
 }
