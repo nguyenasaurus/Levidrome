@@ -1,0 +1,47 @@
+// ABOUT SECTION
+
+.aboutLevidrome {
+    background: $neutralBlue;
+    margin: 25px 0;
+}
+
+.historyText {
+    padding: 10px 0 10px 45px;
+    // margin: 10px 0 10px 45px;
+    border: 1px solid purple;
+}
+
+.dictionaryText{
+    padding: 10px 45px 10px 0;
+}
+
+iframe {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 0;
+    border: 1px solid lime;
+}
+
+//CREDITS SECTION
+.creditSection {
+    background: $neutralBlue;
+    margin: 15px 0;
+}
+
+.creditText {
+    padding: 5px 45px;
+}
+
+.sourceText {
+    font-size: 1.0rem;
+    text-transform: lowercase;
+    padding: 5px 45px;
+}
+
+.sourceText a {
+    color: $black;
+}
+
+.sourceText a:hover {
+    color: $white;
+}

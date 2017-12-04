@@ -12,32 +12,36 @@ h1 {
 	// color: $primaryColor;
 	color: $neutralBlue;
 	font-size: 2.4rem;
-	text-align: center;
+	text-align: left;
 	text-transform: uppercase;
 	text-shadow: 1px 1px 1px $white,
 	0 0 0 #000, 1px 1px 1px $white;
 	// text-shadow: 1px 4px 6px $primaryColor,
 	// 0 0 0 #000, 1px 4px 6px $primaryColor;
 	font-weight: 700;
-	margin: 0;
+	margin: 18px 5px;
+	float: left;
 }
 
 h2 {
 	font-family: $primaryFont;
-	color: $primaryColor;
-	font-size: 1.2rem;
-	text-align: center;
-	// text-shadow: 1px 4px 6px $neutralBlue,
-	// 0 0 0 #000, 1px 4px 6px $neutralBlue;
-	margin: 0;
+	color: $neutralBlue;
+	font-size: 1.8rem;
+	text-align: left;
+	margin: 10px 0;
+	clear: both;
 }
 
 h3 {
+	border: 1px solid green;
 	font-family: $primaryFont;
-	color: $primaryColor;
-	text-transform: lowercase;
+	font-weight: 700;
+	color: $black;
+	text-transform: uppercase;
 	font-size: 1.6rem;
 	margin: 0;
+	padding: 10px 45px;
+	clear: both;
 }
 
 h4 {
@@ -49,8 +53,9 @@ h4 {
 
 p {
 	font-family: $secondaryFont;
-	color: $primaryColor;
-	font-size: 1.0rem;
+	color: $black;
+	font-weight: bold;
+	font-size: 1.2rem;
 	margin: 0;
 }
 
@@ -60,7 +65,7 @@ a {
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	// font-weight: 700;
-	font-size: 1.2rem;
+	// font-size: 1.2rem;
 	text-decoration: none;
 }
 // LAYOUT

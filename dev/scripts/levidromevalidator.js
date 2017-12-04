@@ -220,19 +220,20 @@ class MainInput extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<form action=""
-					onSubmit={this.handleSubmit}>
-					<input type="text"
-						className="firstWord"
-						onChange={this.handleChange}
-						value={this.state.firstWord} />
-					<button type="submit">Submit</button>
-				</form>
+			<div className="row">
+				<div>
+					<form action=""
+						onSubmit={this.handleSubmit}>
+						<input type="text"
+							className="firstWord"
+							onChange={this.handleChange}
+							value={this.state.firstWord} />
+						<button type="submit">Submit</button>
+					</form>
 
 				{/* <PlayAgain />
 				<RandomPair /> */}
-
+				</div>
 			</div>
 		)
 	}
