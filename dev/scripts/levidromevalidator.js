@@ -4,8 +4,7 @@ import axios from 'axios';
 import Qs from 'qs';
 import * as firebase from 'firebase';
 import { Link } from 'react-router-dom';
-
-import { PlayAgain , RandomPair } from './featureButtons';
+import swal from 'sweetalert';
 import List from './list'
 
 // import { PlayAgain, RandomPair } from './featureButtons'
@@ -51,28 +50,9 @@ export default class LevidromeValidator extends React.Component {
 		this.runRequest = this.runRequest.bind(this);
 		this.getFlippedDef = this.getFlippedDef.bind(this);
 		this.addToFirebase = this.addToFirebase.bind(this);
+		this.clear = this.clear.bind(this);
 	}
 
-
-	//retrive info from firebase to display in levidrome list
-	componentDidMount () {
-		const dbRef = firebase.database().ref()
-
-		dbRef.on('value', (firebaseData) => {
-			// console.log(firebaseData.val());
-			const pairArray = [];
-			const levidromeData = firebaseData.val();
-
-			for (let itemsKey in levidromeData) {
-				pairArray.push(levidromeData[itemsKey])
-			}
-			this.setState ({
-				storedItems : pairArray
-			});
-			console.log(this.state.storedItems);
-		})
-		
-	}
 
 	runRequest(urlSection, word) {
 		return axios({
@@ -95,7 +75,7 @@ export default class LevidromeValidator extends React.Component {
 			return result
 		})
 		.catch((error) => {
-			console.log('errorrrr')
+			swal("Oops!", `${this.state.firstWord} is not a levidrome because ${this.state.flippedWord} is not a valid word`, "error");
 		// IF urlselection = wordURL display not a word therefore not not a levidrome
 			// 	// POPUP MODULE TO SAY "word is not valid. Try again"
 		});
@@ -104,7 +84,14 @@ export default class LevidromeValidator extends React.Component {
 	// first API request to check if the submitted word is valid or not
 	findRoot(word) {
 		return this.runRequest(wordURL, word).then((i) => {
-			return i.data.results[0].lexicalEntries[0].inflectionOf[0].id
+			// console.log('i', typeof i);
+				// if (i ==  'undefined' ) {
+					
+				// 	return console.log('working')
+				// }	else {
+				// 	console.log('cow');
+					return i.data.results[0].lexicalEntries[0].inflectionOf[0].id
+				
 		})
 	}
 
@@ -125,6 +112,7 @@ export default class LevidromeValidator extends React.Component {
 
 	//takes the firstWord from child component
 	levidrome(firstWord) {
+
 		// console.log(firstWord)
 		this.setState({definitions: []})
 		const flippedWord = this.flipWord(firstWord)
@@ -191,18 +179,25 @@ export default class LevidromeValidator extends React.Component {
 				}
 			);
 		}
-
+		clear() {
+			console.log('clear is working')
+			this.setState({
+					//clear stuff here
+					firstWord:"",
+					flippedWord: ""
+			})
+		}
 	render() {
 		return (
 			<div>
 				{/* main input for word */}
-				<MainInput submitWord={this.levidrome} displayFlipped={this.state.flippedWord} />
+				<MainInput submitWord={this.levidrome} clearInputs={this.clear} displayFlipped={this.state.flippedWord} />
 				{/* adding definitions to page*/}
 
-				 {this.state.definitions.map((definition) => {
+				 {/* {this.state.definitions.map((definition) => {
 					return <p>{definition}</p>
 					{console.log(definition)}
-					})} 
+					})}  */}
 				
 
 				<div className="row">
@@ -212,7 +207,6 @@ export default class LevidromeValidator extends React.Component {
 						})}
 					</div>
 				</div>
-
 			</div>
 		)
 	}
@@ -220,9 +214,9 @@ export default class LevidromeValidator extends React.Component {
 
 const DisplayDefinitions = (props) => {
 	return (
-				<div className="col-2"> 
-					<p>{props.display}</p>
-				</div>
+			<div className="col-2"> 
+				<p>{props.display}</p>
+			</div>
 	)
 }
 
@@ -236,6 +230,7 @@ class MainInput extends React.Component {
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+		this.clearInput = this.clearInput.bind(this);
 	}
 
 	handleChange(e) {
@@ -247,76 +242,45 @@ class MainInput extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		// prop this.state.bothWords to parent
+		if (this.state.submittedWord === '') {
+			return swal("Please enter a word!");	 
+		}
 		this.props.submitWord(this.state.submittedWord)
+	}
+
+	clearInput(e) {
+		e.preventDefault();
+		
+		this.setState ({
+			submittedWord: ""
+		})
+		this.props.clearInputs()
 	}
 
 	render() {
 		return (
 
-		<div>
-			<form action="" 
-			onSubmit={this.handleSubmit}>
-			<input type="text" 
-			className="firstWord" 
-			onChange ={this.handleChange}
-			value={this.state.firstWord}/>
-			<button type="submit">Submit</button>
-			</form>
-			
-          
-			{/* <List /> put the levidrome list return function in List eventually */}
-			<PlayAgain />
-			<RandomPair />
-
-		</div>
-
-			<div className="row levidrome">
-				<div className="wrapper">
-					<form action=""	className="col-2" onSubmit={this.handleSubmit}>
-						<input type="text"
-							className="firstWord"
-							onChange={this.handleChange}
-							value={this.state.firstWord} />
-						<div className="relative">
-							<button className="button" type="submit">Submit</button>
-						</div>
-					</form>
-					<div className="col-2">
-						<input type="text" className="secondWord" value={this.props.displayFlipped}/>
+		<div className="row levidrome">
+			<div className="wrapper">
+				<form action=""	className="col-2" onSubmit={this.handleSubmit}>
+					<input type="text"
+						className="firstWord"
+						onChange={this.handleChange}
+						value={this.state.submittedWord} />
+					<div className="relative">
+						<button className="button" type="submit">Submit</button>
+						<button className= "clear" onClick={this.clearInput}>clear</button>
 					</div>
-
-				{/* <PlayAgain />
-				<RandomPair /> */}
+				</form>
+				<div className="col-2">
+					<input type="text" className="secondWord" value={this.props.displayFlipped}/>
 				</div>
+
+			{/* <PlayAgain />
+			<RandomPair /> */}
 			</div>
+		</div>
 
 		)
 	}
 }
-
-
-
-// //verify word
-// this.verifyWord(wordURL, this.state.flippedWord).then((res) => {
-// 	console.log(res.data.results[0].lexicalEntries[0].inflectionOf[0].id)
-// 	rootword = res.data.results[0].lexicalEntries[0].inflectionOf[0].id;
-// 	this.state.rootWords.push(rootword)
-// 	console.log(this.state.rootWords)
-// })
-
-// // get definitions for first word
-// this.getDefinition(definitionURL, this.state.firstWord).then((firstDefinition) => {
-// 	firstDefinition = firstDefinition.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
-// 	console.log(firstDefinition)
-// 	this.setState({
-// 		firstDefinition
-// 	})
-// })
-
-//Get the word that was typed in and check if it is a real word
-// this.verifyWord(wordURL, this.state.firstWord).then((res) => {
-// 	console.log(res.data.results[0].lexicalEntries[0].inflectionOf[0].id)
-// 	rootword = res.data.results[0].lexicalEntries[0].inflectionOf[0].id;
-// 	this.state.rootWords.push(rootword)
-// 	console.log(this.state.rootWords)
-// })
