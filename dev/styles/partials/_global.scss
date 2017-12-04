@@ -6,7 +6,6 @@
 	// p general paragraph styling
 	// p definition styling extends p general w/added flare
 
-
 h1 {
 	font-family: $primaryFont;
 	// color: $primaryColor;
@@ -86,6 +85,7 @@ body {
 .row {
 	margin: 100px auto;
 	width: 100%;
+	clear: both;
 }
 
 [class*='col-'] {

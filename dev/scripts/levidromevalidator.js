@@ -169,14 +169,15 @@ export default class LevidromeValidator extends React.Component {
 		return (
 			<div>
 				{/* main input for word */}
-				<MainInput submitWord={this.levidrome} />
-
-				<h3> {this.state.flippedWord}</h3>
+				<MainInput submitWord={this.levidrome} displayFlipped={this.state.flippedWord} />
 				{/* adding definitions to page*/}
-				{this.state.definitions.map((definition) => {
-					return <DisplayDefinitions display={definition}/>
-				})}
-				
+				<div className="row">
+					<div className="wrapper displayDefinitions">
+						{this.state.definitions.map((definition) => {
+							return <DisplayDefinitions display={definition}/>
+						})}
+					</div>
+				</div>
 			</div>
 		)
 	}
@@ -184,13 +185,9 @@ export default class LevidromeValidator extends React.Component {
 
 const DisplayDefinitions = (props) => {
 	return (
-		<div className="row" >
-			<div className="wrapper">
 				<div className="col-2"> 
 					<p>{props.display}</p>
 				</div>
-			</div>
-		</div>
 	)
 }
 
@@ -200,7 +197,7 @@ class MainInput extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			submittedWord: ''
+			submittedWord: '',
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -220,16 +217,20 @@ class MainInput extends React.Component {
 
 	render() {
 		return (
-			<div className="row">
-				<div>
-					<form action=""
-						onSubmit={this.handleSubmit}>
+			<div className="row levidrome">
+				<div className="wrapper">
+					<form action=""	className="col-2" onSubmit={this.handleSubmit}>
 						<input type="text"
 							className="firstWord"
 							onChange={this.handleChange}
 							value={this.state.firstWord} />
-						<button type="submit">Submit</button>
+						<div className="relative">
+							<button className="button" type="submit">Submit</button>
+						</div>
 					</form>
+					<div className="col-2">
+						<input type="text" className="secondWord" value={this.props.displayFlipped}/>
+					</div>
 
 				{/* <PlayAgain />
 				<RandomPair /> */}
