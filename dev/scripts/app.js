@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import List from './list';
 import About from './about';
 import Credits from './credits';
-// import  ListButton  from './featureButtons';
 
 const Nav = () => {
 	return (
