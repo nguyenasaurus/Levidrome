@@ -5,7 +5,7 @@ import Qs from 'qs';
 import * as firebase from 'firebase';
 import { Link } from 'react-router-dom';
 
-import { PlayAgain , RandomPair } from './featureButtons';
+// import { PlayAgain , RandomPair } from './featureButtons';
 import List from './list'
 
 // import { PlayAgain, RandomPair } from './featureButtons'
@@ -195,24 +195,31 @@ export default class LevidromeValidator extends React.Component {
 	render() {
 		return (
 			<div>
-				{/* main input for word */}
-				<MainInput submitWord={this.levidrome} displayFlipped={this.state.flippedWord} />
-				{/* adding definitions to page*/}
+				<section>
+					<div className="wrapper">
+						<p className="introText">While a <span className="wordExample">palindrome</span> is a word that spells the same word backwards, a <span className="wordExample">levidrome</span> is a word that spells another, valid word backwards, such as <span className="wordExample">stop</span> and <span className="wordExample">pots</span>.</p>
+						<p className="introText">Enter a word below to verify whether or not it's a levidrome!</p>
+					</div>
+				</section>
+				<div>
+					{/* main input for word */}
+					<MainInput submitWord={this.levidrome} displayFlipped={this.state.flippedWord} />
+					{/* adding definitions to page*/}
 
-				 {this.state.definitions.map((definition) => {
-					return <p>{definition}</p>
-					{console.log(definition)}
-					})} 
-				
+					{/* {this.state.definitions.map((definition) => {
+						return <p>{definition}</p>
+						{console.log(definition)} */}
+						{/* })}  */}
+					
 
-				<div className="row">
-					<div className="wrapper displayDefinitions">
-						{this.state.definitions.map((definition) => {
-							return <DisplayDefinitions display={definition}/>
-						})}
+					<div className="row">
+						<div className="wrapper displayDefinitions">
+							{this.state.definitions.map((definition) => {
+								return <DisplayDefinitions display={definition}/>
+							})}
+						</div>
 					</div>
 				</div>
-
 			</div>
 		)
 	}
@@ -252,23 +259,6 @@ class MainInput extends React.Component {
 
 	render() {
 		return (
-
-		<div>
-			<form action="" 
-			onSubmit={this.handleSubmit}>
-			<input type="text" 
-			className="firstWord" 
-			onChange ={this.handleChange}
-			value={this.state.firstWord}/>
-			<button type="submit">Submit</button>
-			</form>
-			
-          
-			{/* <List /> put the levidrome list return function in List eventually */}
-			<PlayAgain />
-			<RandomPair />
-
-		</div>
 
 			<div className="row levidrome">
 				<div className="wrapper">
