@@ -4,7 +4,7 @@ import axios from 'axios';
 import Qs from 'qs';
 import * as firebase from 'firebase';
 import { Link } from 'react-router-dom';
-import { PlayAgain, RandomPair } from './featureButtons'
+// import { PlayAgain, RandomPair } from './featureButtons'
 
 
 // Initialize Firebase
@@ -33,15 +33,10 @@ export default class LevidromeValidator extends React.Component {
 			firstWord: '',
 			flippedWord: '',
 			firstRootWord: '',
-<<<<<<< HEAD
-			flippedRootWord: '',
-			definitions: []
-=======
 			flippedRootWord:'',
 			definitions: [],
 			word : '',
 			pairedWord : ''
->>>>>>> 5f3a62f05eac629f7ebcded14fe435133c8e74d4
 		}
 		this.getDefinition = this.getDefinition.bind(this);
 		this.flipWord = this.flipWord.bind(this);
@@ -179,14 +174,27 @@ export default class LevidromeValidator extends React.Component {
 				<h3> {this.state.flippedWord}</h3>
 				{/* adding definitions to page*/}
 				{this.state.definitions.map((definition) => {
-					return <p>{definition}</p>
-					{console.log(definition)}
-					})} 
+					return <DisplayDefinitions display={definition}/>
+				})}
 				
 			</div>
 		)
 	}
 }
+
+const DisplayDefinitions = (props) => {
+	return (
+		<div className="row" >
+			<div className="wrapper">
+				<div className="col-2"> 
+					<p>{props.display}</p>
+				</div>
+			</div>
+		</div>
+	)
+}
+
+
 
 class MainInput extends React.Component {
 	constructor() {
@@ -222,26 +230,14 @@ class MainInput extends React.Component {
 					<button type="submit">Submit</button>
 				</form>
 
-				<PlayAgain />
-				<RandomPair />
+				{/* <PlayAgain />
+				<RandomPair /> */}
 
 			</div>
 		)
 	}
 }
 
-<<<<<<< HEAD
-const DisplayResults = (props) => {
-	return (
-		<div className="col-2">
-			{this.props.wordEntry}
-			{/* {this.props.definitionEntry} */}
-		</div>
-	)
-}
-
-=======
->>>>>>> 5f3a62f05eac629f7ebcded14fe435133c8e74d4
 
 
 // //verify word
