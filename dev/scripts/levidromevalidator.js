@@ -4,7 +4,8 @@ import axios from 'axios';
 import Qs from 'qs';
 import * as firebase from 'firebase';
 import { Link } from 'react-router-dom';
-import { PlayAgain , RandomPair } from './featureButtons'
+import { PlayAgain , RandomPair } from './featureButtons';
+import List from './list'
 
 
 // Initialize Firebase
@@ -36,7 +37,8 @@ export default class LevidromeValidator extends React.Component {
 			flippedRootWord:'',
 			definitions: [],
 			word : '',
-			pairedWord : ''
+			pairedWord : '',
+			storedItems:[]
 		}
 		this.getDefinition = this.getDefinition.bind(this);
 		this.flipWord = this.flipWord.bind(this);
@@ -45,6 +47,27 @@ export default class LevidromeValidator extends React.Component {
 		this.runRequest = this.runRequest.bind(this);
 		this.getFlippedDef = this.getFlippedDef.bind(this);
 		this.addToFirebase = this.addToFirebase.bind(this);
+	}
+
+
+	//retrive info from firebase to display in levidrome list
+	componentDidMount () {
+		const dbRef = firebase.database().ref()
+
+		dbRef.on('value', (firebaseData) => {
+			// console.log(firebaseData.val());
+			const pairArray = [];
+			const levidromeData = firebaseData.val();
+
+			for (let itemsKey in levidromeData) {
+				pairArray.push(levidromeData[itemsKey])
+			}
+			this.setState ({
+				storedItems : pairArray
+			});
+			console.log(this.state.storedItems);
+		})
+		
 	}
 
 	runRequest(urlSection, word) {
@@ -111,19 +134,19 @@ export default class LevidromeValidator extends React.Component {
 					flippedWord,
 					firstRootWord : firstRoot
 				}, () => {
-					const firstDef = this.getDefinition(this.state.firstRootWord)
-					.then((definition) => {
-						// clear array and then push definitions into definition array
-						
-						const newDef = [];
-						newDef.push(definition)
-						// console.log('definition', definition);
-						this.setState({ definitions : newDef});
-						this.getFlippedDef();
+						const firstDef = this.getDefinition(this.state.firstRootWord)
+						.then((definition) => {
+							// clear array and then push definitions into definition array
+							
+							const newDef = [];
+							newDef.push(definition)
+							// console.log('definition', definition);
+							this.setState({ definitions : newDef});
+							this.getFlippedDef();
 
-					})
-				}
-			)
+						})
+					}
+				)
 			})
 		}
 
@@ -173,7 +196,7 @@ export default class LevidromeValidator extends React.Component {
 
 				<h3> {this.state.flippedWord}</h3>
 				{/* adding definitions to page*/}
-				{this.state.definitions.map((definition) => {
+				 {this.state.definitions.map((definition) => {
 					return <p>{definition}</p>
 					{console.log(definition)}
 					})} 
@@ -216,7 +239,9 @@ class MainInput extends React.Component {
 			value={this.state.firstWord}/>
 			<button type="submit">Submit</button>
 			</form>
-
+			
+          
+			{/* <List /> put the levidrome list return function in List eventually */}
 			<PlayAgain />
 			<RandomPair />
 
