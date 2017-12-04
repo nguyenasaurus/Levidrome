@@ -1,11 +1,10 @@
 // INPUT FORM STYLES
 
-// form {
-//     // border: 1px solid lime;
-// }
+.levidrome {
+    margin: 75px auto;
+}
 
 input {
-    display: block;
     margin: 0 auto;
     background: $neutralBlue;
     font-family: $primaryFont;
@@ -14,8 +13,11 @@ input {
     font-size: 1.8rem;
     text-align: center;
     border: 2px solid $neutralBlue;
-    // box-shadow: 
-    // border-radius:3px;
+    width: 80%;
+}
+
+.relative {
+    position: relative;
 }
 
 button {
@@ -24,7 +26,17 @@ button {
     background: $primaryColor;
     color: $white;
     padding: 5px 15px;
-    display: block;
     margin: 10px auto;
     border: 2px solid $neutralBlue;
+    position: relative;
+    left: 85%;
+    right: 115%;
+}
+
+.displayDefinitions p {
+    width: 80%;
+    padding-left: 30px;
+    padding-right: 20px;
+    margin-bottom: 50px;
+    color: white;
 }

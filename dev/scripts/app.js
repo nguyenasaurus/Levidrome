@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import List from './list';
 import About from './about';
 import Credits from './credits';
-import  ListButton  from './featureButtons';
+// import  ListButton  from './featureButtons';
 
 const Nav = () => {
 	return (
@@ -27,8 +27,6 @@ const FooterNav = () => {
 				<li><Link to="/list">Levidrome List</Link></li>
 				<li><Link to="/credits">Credits</Link></li>
 			</ul>
-			{/* <Route exact path="/about" />
-			<Route exact path="/list" /> */}
 		</nav>
 	)
 }
