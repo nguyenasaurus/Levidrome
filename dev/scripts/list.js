@@ -12,6 +12,11 @@ class List extends React.Component {
             <p>Filler Text</p>
             {/* <h2>List</h2>
             <Link to="/">Main</Link> */}
+            {/* <div> */}
+				{/* {this.state.storedItems.map((item) => {
+					return <li>{item}</li>
+				})} */}
+			{/* </div> */}
 
          </div>
 
