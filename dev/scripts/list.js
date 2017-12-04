@@ -54,6 +54,7 @@ class List extends React.Component {
         return (
             <div className="row">
                 <div className="wrapper">
+                <h2>List of Levidromes</h2>
                     <ul className="levidromeList">
                         {this.state.uniquePairs.map((pair) => {
                         return (
