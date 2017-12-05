@@ -314,7 +314,7 @@ class MainInput extends React.Component {
 					<input type="text"
 						className="firstWord"
 						onChange={this.handleChange}
-						value={this.state.submittedWord} input1={this.state.firstWord} />
+						value={this.state.submittedWord} />
 					<div className="clearfix">
 						<div className="wrapper">
 								<div className="clearfix"><i class="fa fa-exchange fa-4x" aria-hidden="true"></i>
