@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import * as firebase from 'firebase';
 
+
 class List extends React.Component {
    constructor() {
       super();
@@ -23,24 +24,28 @@ class List extends React.Component {
          const levidromeData = firebaseData.val();
 
          for (let itemsKey in levidromeData) {
-            pairArray.push(levidromeData[itemsKey])
+            pairArray.push({
+               key : itemsKey,
+               firstWord: levidromeData[itemsKey].firstWord,
+               flippedWord: levidromeData[itemsKey].flippedWord
+            })
          }
          this.setState({
             storedItems: pairArray
          });            
+         // console.log('yasss', this.state.storedItems);
          
          let words = pairArray;
          let uniquePairs = [];
 
          words.forEach((pair) => {
-            // console.log(pair)
             let i = uniquePairs.findIndex(x => x.firstWord == pair.firstWord);
             if (i <= -1) {
-               uniquePairs.push({firstWord: pair.firstWord, flippedWord: pair.flippedWord})
+               uniquePairs.push({key: pair.key, firstWord: pair.firstWord, flippedWord: pair.flippedWord})
             }
          })
          this.setState({ uniquePairs })
-         console.log(this.state.uniquePairs)
+         // console.log('what', this.state.uniquePairs)
       });
     }
 
@@ -52,10 +57,10 @@ class List extends React.Component {
                     <ul className="levidromeList">
                         {this.state.uniquePairs.map((pair) => {
                         return (
-                           <li className="pairing">
+                           <ul key={pair.key} className="pairing">
                               <li className="col-2">{pair.firstWord}</li>
                               <li className="col-2">{pair.flippedWord}</li>
-                           </li>
+                           </ul>
                         )
                         })}
                     </ul>

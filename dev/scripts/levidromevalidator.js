@@ -18,6 +18,23 @@ var config = {
 };
 firebase.initializeApp(config);
 
+//twitter script
+window.twttr = (function(d, s, id) {
+	var js, fjs = d.getElementsByTagName(s)[0],  t = window.twttr || {};
+	if (d.getElementById(id)) return t;
+	js = d.createElement(s); js.id = id;
+	js.src = "https://platform.twitter.com/widgets.js";
+	fjs.parentNode.insertBefore(js, fjs);
+	t._e = []; t.ready = function(f) {
+	  t._e.push(f);
+	};
+	return t;
+ }
+ (document, "script", "twitter-wjs"));
+ 
+
+
+
 const key = '10faf101cb01f99e61fe0358e0807373';
 //'b7b40e21fdccd7460635c749a5dbb44b'; first key
 const id = 'ba5599bf';
@@ -34,6 +51,7 @@ export default class LevidromeValidator extends React.Component {
 			flippedWord: '',
 			firstRootWord: '',
 			flippedRootWord:'',
+			wordsArray: [],
 			definitions: [],
 			word : '',
 			pairedWord : '',
@@ -106,20 +124,29 @@ export default class LevidromeValidator extends React.Component {
 		console.log(firstWord)
 		console.log(flippedWord)
 		//runRequest to verify the entered words are valid.Store the root words, which are the 'id' property into firstRootWord and flippedRootWord and push them into the rootWords Array.
+		
 		const firstRootWord = this.findRoot(firstWord)
-			.then((firstRoot) => {
-				this.setState({
-					firstWord,
-					flippedWord,
-					firstRootWord : firstRoot
-				}, () => {
-						const firstDef = this.getDefinition(this.state.firstRootWord)
-						.then((definition) => {
-							// clear array and then push definitions into definition array
-							
+		.then((firstRoot) => {
+			const validatedWordArray = [];
+			//push the first word into wordsArray
+			validatedWordArray.push(firstWord)
+			this.setState({
+				firstWord,
+				flippedWord,
+				firstRootWord : firstRoot,
+				wordsArray : validatedWordArray,
+			}, () => {
+				const firstDef = this.getDefinition(this.state.firstRootWord)
+				.then((definition) => {
+					// clear word array and push first root word into word array
+					
+					// clear array and then push definitions into definition array
 							const newDef = [];
 							newDef.push(definition)
-							this.setState({ definitions : newDef});
+							this.setState({ 	
+								definitions : newDef
+							});
+							console.log(validatedWordArray);
 							this.getFlippedDef();
 
 						})
@@ -131,6 +158,17 @@ export default class LevidromeValidator extends React.Component {
 		getFlippedDef() {
 			const flippedRootWord = this.findRoot(this.state.flippedWord)
 			.then((flippedRoot) => {
+				const secondValidatedWord = Array.from(this.state.wordsArray);
+				//push the flipped word into wordsArray
+				secondValidatedWord.push(this.state.flippedWord);
+				this.setState({ 
+					wordsArray : secondValidatedWord
+				})
+				console.log(this.state.wordsArray);
+				//push validated levidrome words to firebase
+				if (this.state.wordsArray.length === 2) {
+					this.addToFirebase();
+				}
 					this.setState({
 						flippedRootWord: flippedRoot
 					}, () => {
@@ -140,11 +178,11 @@ export default class LevidromeValidator extends React.Component {
 							// push definition into array
 							const newDef2 = Array.from(this.state.definitions);
 							newDef2.push(definition2)
-							this.setState({ definitions : newDef2})
+							this.setState({
+								definitions : newDef2
+							})
 							console.log(this.state.definitions)
-							if (this.state.definitions.length === 2) {
-								this.addToFirebase();
-							}
+							
 						})
 					}
 				)
@@ -188,8 +226,8 @@ export default class LevidromeValidator extends React.Component {
 				<MainInput submitWord={this.levidrome} displayFlipped={this.state.flippedWord} clearFirst={this.state.firstWord}/>
 			<div className="row">
 				<div className="wrapper displayDefinitions">
-					{this.state.definitions.map((definition) => {
-						return <DisplayDefinitions display={definition}/>
+					{this.state.definitions.map((definition, i) => {
+						return <DisplayDefinitions display={definition} key={i}/>
 					})}
 				</div>
 			</div>
@@ -230,6 +268,10 @@ const DisplayDefinitions = (props) => {
 			</div>
 	)
 }
+
+const Twitter = (props) => (
+	<a className="twitter-share-button" href={`https://twitter.com/intent/tweet?text=Did%20you%20know?%20that${props.input1}`}>Tweet</a>
+  );
 
 
 class MainInput extends React.Component {
@@ -272,7 +314,7 @@ class MainInput extends React.Component {
 					<input type="text"
 						className="firstWord"
 						onChange={this.handleChange}
-						value={this.state.submittedWord} />
+						value={this.state.submittedWord} input1={this.state.firstWord} />
 					<div className="clearfix">
 						<div className="wrapper">
 								<div className="clearfix"><i class="fa fa-exchange fa-4x" aria-hidden="true"></i>
@@ -286,6 +328,7 @@ class MainInput extends React.Component {
 				<div className="col-2">
 					<input type="text" className="secondWord" value={this.props.displayFlipped}/>
 				</div>
+				<Twitter />
 			</div>
 		</div>
 

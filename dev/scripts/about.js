@@ -36,19 +36,19 @@ class About extends React.Component {
 				<section className="clearfix aboutLevidrome">
 					<h3>#Levidrome supporters:</h3>
 					<ul>
-						<li><img src="../../images/oxford.png" alt=""/></li>
+						<li><img src="./dev/styles/images/oxford.png" alt=""/></li>
 						<li>Oxford English Dictionary</li>
 					</ul>
 					<ul>
-						<li><img src="../../images/MW_logosmall.png" alt=""/></li>
+						<li><img src="./dev/styles/images/MW_logosmall.png" alt=""/></li>
 						<li>Merriam-Webster Dictionary</li>
 					</ul>
 					<ul>
-						<li><img src="../../images/startrek.png" alt=""/></li>
+						<li><img src="./dev/styles/images/startrek.png" alt=""/></li>
 						<li>William Shatner</li>
 					</ul>
 					<ul>
-						<li><img src="../../images/oscar.png" alt="" /></li>
+						<li><img src="./dev/styles/images/oscar.png" alt="" /></li>
 						<li>Patricia Arquette</li>
 					</ul>
 				</section>
