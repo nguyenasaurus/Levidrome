@@ -19,7 +19,6 @@ h1 {
 	// 0 0 0 #000, 1px 4px 6px $primaryColor;
 	font-weight: 700;
 	margin: 18px 5px;
-	float: left;
 }
 
 h2 {
@@ -90,10 +89,6 @@ body {
 
 [class*='col-'] {
 	float: left;
-	padding-right: 50px;
-	&::last-of-type {
-		padding-right: 0;
-	}
 }
 
 .col-2 {

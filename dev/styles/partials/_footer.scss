@@ -1,11 +1,14 @@
 // FOOTER STYLES
 
 footer {
+    bottom: 0;
     background: $primaryColor;
     clear: both;
+    width: 100%;
+    position: relative;
 }
 
 .footerSection {
-    margin: 10px 0;
+    margin: 20px 0;
     font-size: 0.8rem;
 }
