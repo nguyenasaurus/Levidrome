@@ -162,11 +162,11 @@ export default class LevidromeValidator extends React.Component {
 			);
 		}
 		clear() {
-			console.log('clear is working')
 			this.setState({
 					//clear input boxes here
 					firstWord:"",
-					flippedWord: ""
+					flippedWord: "",
+					definitions: [],
 			})
 		}
 
@@ -176,13 +176,16 @@ export default class LevidromeValidator extends React.Component {
 				<div className="row">
 					<div className="wrapper">
 						<h1 className="mainTitle">Levidrome Validator</h1>
-						<p className="introText">While a <span className="wordExample">palindrome</span> is a word that spells the same word backwards, a <span className="wordExample">levidrome</span> is a word that spells another, valid word backwards, such as <span className="wordExample">stop</span> and <span className="wordExample">pots</span>.</p>
-						<p className="introText">Enter a word below to verify whether or not it's a levidrome!</p>
+						<div className="logo">
+							<img src="./public/styles/images/levidrome-icon-white.png" alt=""/>
+						</div>
+						<p className="introText"> A <span className="wordExample">levidrome</span> is a word that spells another, valid word backwards, such as <span className="wordExample">stop</span> and <span className="wordExample">pots</span>.</p>
+						<p className="instructions">Enter a word below to verify whether or not it's a levidrome!</p>
 					</div>
 				</div>
 
     				{/* main input for word */}
-				<MainInput submitWord={this.levidrome} clearInputs={this.clear} displayFlipped={this.state.flippedWord} />
+				<MainInput submitWord={this.levidrome} displayFlipped={this.state.flippedWord} clearFirst={this.state.firstWord}/>
 			<div className="row">
 				<div className="wrapper displayDefinitions">
 					{this.state.definitions.map((definition) => {
@@ -190,7 +193,32 @@ export default class LevidromeValidator extends React.Component {
 					})}
 				</div>
 			</div>
+			<div className="clearfix">
+					<FeaturedButtons clearInputs={this.clear} />
+			</div>
 			</main>
+		)
+	}
+}
+
+class FeaturedButtons extends React.Component {
+	constructor() {
+		super();
+		this.state={}
+		this.clearInput = this.clearInput.bind(this);
+	}
+
+	clearInput(e) {
+		e.preventDefault();
+		this.props.clearInputs()
+		// clear submitted word state in MainInput component
+	}
+
+	render() {
+		return (
+			<div className="featureButtons clearfix">
+				<button className="clear" onClick={this.clearInput}>clear</button>
+			</div>
 		)
 	}
 }
@@ -198,7 +226,7 @@ export default class LevidromeValidator extends React.Component {
 const DisplayDefinitions = (props) => {
 	return (
 			<div className="col-2"> 
-				<p>{props.display}</p>
+				<p className="definitionText">{props.display}</p>
 			</div>
 	)
 }
@@ -212,7 +240,7 @@ class MainInput extends React.Component {
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-		this.clearInput = this.clearInput.bind(this);
+		this.clearFirst = this.clearFirst.bind(this);
 	}
 
 	handleChange(e) {
@@ -230,13 +258,11 @@ class MainInput extends React.Component {
 		this.props.submitWord(this.state.submittedWord)
 	}
 
-	clearInput(e) {
+	clearFirst(e) {
 		e.preventDefault();
-		this.setState ({
-			submittedWord: ""
-		})
-		this.props.clearInputs()
+		this.setState({submittedWord: ''})
 	}
+
 
 	render() {
 		return (
@@ -249,11 +275,10 @@ class MainInput extends React.Component {
 						value={this.state.submittedWord} />
 					<div className="clearfix">
 						<div className="wrapper">
-								<div className="clearfix">
-									<button className="submit" type="submit">Submit</button>
+								<div className="clearfix"><i class="fa fa-exchange fa-4x" aria-hidden="true"></i>
 								</div>
 								<div className="clearfix">
-									<button className="clear" onClick={this.clearInput}>clear</button>
+									<button className="submit" type="submit">Submit</button>
 								</div>
 						</div>
 					</div>

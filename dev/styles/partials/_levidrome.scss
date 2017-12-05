@@ -10,9 +10,18 @@ main.levidrome {
 
 h1.mainTitle {
         text-align: center;
-        margin: 75px auto;
+        margin: 50px auto 20px auto;
         display:block;
+        font-size: 3rem;
     }
+
+.logo {
+    width: 15%;
+    margin: 0 auto;
+    img {
+        width: 100%;
+    }
+}
 
 .wordExample {
 	font-style: italic;
@@ -22,6 +31,10 @@ p.introText {
     text-align: center;
     color: $white;
     margin: 20px auto;
+}
+
+form {
+    z-index: 10;
 }
 
 input {
@@ -40,7 +53,7 @@ input {
     position: relative;
 }
 
-button {
+button.submit, button.clear {
     font-family: $primaryFont;
     font-size: 1.2rem;
     background: $primaryColor;
@@ -49,21 +62,41 @@ button {
     margin: 10px auto;
     border: 2px solid $neutralBlue;
     position: relative;
+    @extend .clearfix;
+    z-index: 10;
+}
+
+button.submit {
+    top: -35px;
     left: 63%;
     right: -63%;
-    @extend .clearfix;
-    .submit {
-        top:0;
-    }
+}
+
+button.clear {
+    left: 0;
+}
+
+i.fa {
+    position: relative;
+    top: -42px;
+    left: 63%;
+    right: -63%;
+    color: $white;
 }
 
 .displayDefinitions {
     margin: 0 auto;
     position: relative;
-    top: -50px;
+    top: -100px;
+    z-index: -5;
 }
 
-.displayDefinitions p {
+p.introText, p.instructions, p.definitionText {
     color: white;
-    margin: 20px 15px;
+    margin: 30px 75px;
 }
+
+p.instructions {
+        padding-top: 20px;
+        margin-bottom: -30px;
+    }
