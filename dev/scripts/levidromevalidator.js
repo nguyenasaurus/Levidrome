@@ -29,10 +29,7 @@ window.twttr = (function(d, s, id) {
 	  t._e.push(f);
 	};
 	return t;
- }
- (document, "script", "twitter-wjs"));
- 
-
+ }(document, "script", "twitter-wjs"));
 
 
 const key = '10faf101cb01f99e61fe0358e0807373';
@@ -232,7 +229,8 @@ export default class LevidromeValidator extends React.Component {
 				</div>
 			</div>
 			<div className="clearfix">
-					<FeaturedButtons clearInputs={this.clear} />
+				<FeaturedButtons clearInputs={this.clear} />
+				<Twitter />
 			</div>
 			</main>
 		)
@@ -269,9 +267,14 @@ const DisplayDefinitions = (props) => {
 	)
 }
 
-const Twitter = (props) => (
-	<a className="twitter-share-button" href={`https://twitter.com/intent/tweet?text=Did%20you%20know?%20that${props.input1}`}>Tweet</a>
-  );
+const Twitter = () => (
+	<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" 
+	className="twitter-share-button" 
+	data-text="Check out new levidromes with this levidrome validator app!" 
+	data-url="https:fillerurl.com" 
+	data-hashtags="levidrome" 
+	data-show-count="false">Tweet</a>
+ );
 
 
 class MainInput extends React.Component {
@@ -317,7 +320,7 @@ class MainInput extends React.Component {
 						value={this.state.submittedWord} />
 					<div className="clearfix">
 						<div className="wrapper">
-								<div className="clearfix"><i class="fa fa-exchange fa-4x" aria-hidden="true"></i>
+								<div className="clearfix"><i className="fa fa-exchange fa-4x" aria-hidden="true"></i>
 								</div>
 								<div className="clearfix">
 									<button className="submit" type="submit">Submit</button>
@@ -328,7 +331,6 @@ class MainInput extends React.Component {
 				<div className="col-2">
 					<input type="text" className="secondWord" value={this.props.displayFlipped}/>
 				</div>
-				<Twitter />
 			</div>
 		</div>
 
