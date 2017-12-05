@@ -54,6 +54,7 @@ export default class LevidromeValidator extends React.Component {
 			pairedWord : '',
 			storedItems:[]
 		}
+		this.handleChange = this.handleChange.bind(this);
 		this.getDefinition = this.getDefinition.bind(this);
 		this.flipWord = this.flipWord.bind(this);
 		this.levidrome = this.levidrome.bind(this);
@@ -63,7 +64,6 @@ export default class LevidromeValidator extends React.Component {
 		this.addToFirebase = this.addToFirebase.bind(this);
 		this.clear = this.clear.bind(this);
 	}
-
 
 	runRequest(urlSection, word) {
 		return axios({
@@ -196,6 +196,11 @@ export default class LevidromeValidator extends React.Component {
 				}
 			);
 		}
+
+		handleChange(firstWord) {
+			this.setState({firstWord})
+		}
+
 		clear() {
 			this.setState({
 					//clear input boxes here
@@ -220,7 +225,7 @@ export default class LevidromeValidator extends React.Component {
 				</div>
 
     				{/* main input for word */}
-				<MainInput submitWord={this.levidrome} displayFlipped={this.state.flippedWord} clearFirst={this.state.firstWord}/>
+				<MainInput handleChange={this.handleChange} submitWord={this.levidrome} displayFlipped={this.state.flippedWord} displayFirst={this.state.firstWord}/>
 			<div className="row">
 				<div className="wrapper displayDefinitions">
 					{this.state.definitions.map((definition, i) => {
@@ -247,7 +252,6 @@ class FeaturedButtons extends React.Component {
 	clearInput(e) {
 		e.preventDefault();
 		this.props.clearInputs()
-		// clear submitted word state in MainInput component
 	}
 
 	render() {
@@ -285,13 +289,14 @@ class MainInput extends React.Component {
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-		this.clearFirst = this.clearFirst.bind(this);
 	}
 
 	handleChange(e) {
-		this.setState({
-			submittedWord: e.target.value,
-		})
+		this.setState({submittedWord: e.target.value})
+		console.log(e.target.value)
+
+		//send to value to parent so you can set textValue state from parent
+		this.props.handleChange(e.target.value)
 	}
 
 	handleSubmit(e) {
@@ -303,12 +308,6 @@ class MainInput extends React.Component {
 		this.props.submitWord(this.state.submittedWord)
 	}
 
-	clearFirst(e) {
-		e.preventDefault();
-		this.setState({submittedWord: ''})
-	}
-
-
 	render() {
 		return (
 		<div className="row levidrome">
@@ -317,7 +316,7 @@ class MainInput extends React.Component {
 					<input type="text"
 						className="firstWord"
 						onChange={this.handleChange}
-						value={this.state.submittedWord} />
+						value={this.props.displayFirst} />
 					<div className="clearfix">
 						<div className="wrapper">
 								<div className="clearfix"><i className="fa fa-exchange fa-4x" aria-hidden="true"></i>
