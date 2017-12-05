@@ -26,6 +26,25 @@ class About extends React.Component {
 						<p>Both the Merriam-Webster Dictionary and the Oxford English Dictionary have been contacted regarding the possibility of having levidrome officially accepted as a formal word in the dictionary. The response has been the same - to earn a spot in their dictionaries, the word has to be used by a group of people for an extended period of time. It isn't in the dictionary yet, but if we start using it today, that may change!</p>
 					</div>
 				</section>
+				<section className="clearfix aboutLevidrome">
+					<h3>#Levidrome supporters:</h3>
+					<ul>
+						<li><img src="../../images/oxford.png" alt=""/></li>
+						<li>Oxford English Dictionary</li>
+					</ul>
+					<ul>
+						<li><img src="../../images/MW_logosmall.png" alt=""/></li>
+						<li>Merriam-Webster Dictionary</li>
+					</ul>
+					<ul>
+						<li><img src="../../images/startrek.png" alt=""/></li>
+						<li>William Shatner</li>
+					</ul>
+					<ul>
+						<li><img src="../../images/oscar.png" alt="" /></li>
+						<li>Patricia Arquette</li>
+					</ul>
+				</section>
 			</div>
 
 		)
