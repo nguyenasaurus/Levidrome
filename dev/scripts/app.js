@@ -7,6 +7,7 @@ import List from './list';
 import About from './about';
 import Credits from './credits';
 
+
 export const Nav = () => {
 	return (
 		<nav>
@@ -17,6 +18,8 @@ export const Nav = () => {
 		</nav>
 	)
 }
+
+
 
 export const FooterNav = () => {
 	return (
