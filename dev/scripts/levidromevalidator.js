@@ -185,37 +185,25 @@ export default class LevidromeValidator extends React.Component {
 		}
 	render() {
 		return (
-			<div>
-			<section>
+			<main className="levidrome">
+				<div className="row">
 					<div className="wrapper">
+						<h1 className="mainTitle">Levidrome Validator</h1>
 						<p className="introText">While a <span className="wordExample">palindrome</span> is a word that spells the same word backwards, a <span className="wordExample">levidrome</span> is a word that spells another, valid word backwards, such as <span className="wordExample">stop</span> and <span className="wordExample">pots</span>.</p>
 						<p className="introText">Enter a word below to verify whether or not it's a levidrome!</p>
 					</div>
-				</section>
-				<div>
+				</div>
 
-    
     				{/* main input for word */}
 				<MainInput submitWord={this.levidrome} clearInputs={this.clear} displayFlipped={this.state.flippedWord} />
-				{/* adding definitions to page*/}
-
-				 {/* {this.state.definitions.map((definition) => {
-					return <p>{definition}</p>
-					{console.log(definition)}
-					})}  */}
-
-					
-
-					<div className="row">
-						<div className="wrapper displayDefinitions">
-							{this.state.definitions.map((definition) => {
-								return <DisplayDefinitions display={definition}/>
-							})}
-						</div>
-
-					</div>
+			<div className="row">
+				<div className="wrapper displayDefinitions">
+					{this.state.definitions.map((definition) => {
+						return <DisplayDefinitions display={definition}/>
+					})}
 				</div>
 			</div>
+			</main>
 		)
 	}
 }
@@ -276,9 +264,15 @@ class MainInput extends React.Component {
 						className="firstWord"
 						onChange={this.handleChange}
 						value={this.state.submittedWord} />
-					<div className="relative">
-						<button className="button" type="submit">Submit</button>
-						<button className= "clear" onClick={this.clearInput}>clear</button>
+					<div className="clearfix">
+						<div className="wrapper">
+								<div className="clearfix">
+									<button className="submit" type="submit">Submit</button>
+								</div>
+								<div className="clearfix">
+									<button className="clear" onClick={this.clearInput}>clear</button>
+								</div>
+						</div>
 					</div>
 				</form>
 				<div className="col-2">
