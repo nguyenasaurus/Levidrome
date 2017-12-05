@@ -71,22 +71,14 @@ export default class LevidromeValidator extends React.Component {
 			return result
 		})
 		.catch((error) => {
-			swal("Oops!", `${this.state.firstWord} is not a levidrome because ${this.state.flippedWord} is not a valid word`, "error");
-		// IF urlselection = wordURL display not a word therefore not not a levidrome
-			// 	// POPUP MODULE TO SAY "word is not valid. Try again"
+			swal("Oops!", "This is not a levidrome as one of the words in not valid.", "error");
 		});
 	}
 
 	// first API request to check if the submitted word is valid or not
 	findRoot(word) {
 		return this.runRequest(wordURL, word).then((i) => {
-			// console.log('i', typeof i);
-				// if (i ==  'undefined' ) {
-					
-				// 	return console.log('working')
-				// }	else {
-				// 	console.log('cow');
-					return i.data.results[0].lexicalEntries[0].inflectionOf[0].id
+			return i.data.results[0].lexicalEntries[0].inflectionOf[0].id
 				
 		})
 	}
@@ -96,7 +88,6 @@ export default class LevidromeValidator extends React.Component {
 		return this.runRequest(definitionURL, word).then((i) => {
 			return i.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
 		})
-		// let definition = res.data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
 	}
 
 	flipWord(str) {
@@ -128,7 +119,6 @@ export default class LevidromeValidator extends React.Component {
 							
 							const newDef = [];
 							newDef.push(definition)
-							// console.log('definition', definition);
 							this.setState({ definitions : newDef});
 							this.getFlippedDef();
 
@@ -141,7 +131,6 @@ export default class LevidromeValidator extends React.Component {
 		getFlippedDef() {
 			const flippedRootWord = this.findRoot(this.state.flippedWord)
 			.then((flippedRoot) => {
-				// console.log('flippedword', this.state.flippedWord)
 					this.setState({
 						flippedRootWord: flippedRoot
 					}, () => {
@@ -149,11 +138,8 @@ export default class LevidromeValidator extends React.Component {
 						const flippedDef = this.getDefinition(this.state.flippedRootWord)
 						.then((definition2) => {
 							// push definition into array
-
 							const newDef2 = Array.from(this.state.definitions);
-							// console.log('newDef2 before',newDef2);
 							newDef2.push(definition2)
-							// console.log('newDef2',newDef2);
 							this.setState({ definitions : newDef2})
 							console.log(this.state.definitions)
 							if (this.state.definitions.length === 2) {
@@ -178,11 +164,12 @@ export default class LevidromeValidator extends React.Component {
 		clear() {
 			console.log('clear is working')
 			this.setState({
-					//clear stuff here
+					//clear input boxes here
 					firstWord:"",
 					flippedWord: ""
 			})
 		}
+
 	render() {
 		return (
 			<main className="levidrome">
@@ -217,7 +204,6 @@ const DisplayDefinitions = (props) => {
 }
 
 
-
 class MainInput extends React.Component {
 	constructor() {
 		super();
@@ -246,7 +232,6 @@ class MainInput extends React.Component {
 
 	clearInput(e) {
 		e.preventDefault();
-		
 		this.setState ({
 			submittedWord: ""
 		})
@@ -255,8 +240,6 @@ class MainInput extends React.Component {
 
 	render() {
 		return (
-
-
 		<div className="row levidrome">
 			<div className="wrapper">
 				<form action=""	className="col-2" onSubmit={this.handleSubmit}>
@@ -278,9 +261,6 @@ class MainInput extends React.Component {
 				<div className="col-2">
 					<input type="text" className="secondWord" value={this.props.displayFlipped}/>
 				</div>
-
-			{/* <PlayAgain />
-			<RandomPair /> */}
 			</div>
 		</div>
 
