@@ -2,24 +2,23 @@
 
 .aboutLevidrome {
     background: $neutralBlue;
-    margin: 25px 0;
+    h3 {
+    margin: 20px 30px;
+    padding-top: 40px;
+    }
 }
 
-.historyText {
-    padding: 10px 0 10px 45px;
-    // margin: 10px 0 10px 45px;
-    border: 1px solid purple;
+.historyText, .dictionaryText {
+    margin: 20px 30px;
+    margin-bottom: 40px;
 }
 
-.dictionaryText{
-    padding: 10px 45px 10px 0;
-}
-
-iframe {
+iframe.video {
     display: block;
     margin: 0 auto;
-    padding: 10px 0;
-    border: 1px solid lime;
+    width: 420px;
+    height: 290px;
+    padding: 20px;
 }
 
 //CREDITS SECTION
@@ -44,4 +43,10 @@ iframe {
 
 .sourceText a:hover {
     color: $white;
+}
+
+.textWrapper {
+    @extend .wrapper;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }

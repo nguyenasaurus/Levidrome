@@ -15,10 +15,7 @@ h1 {
 	text-transform: uppercase;
 	text-shadow: 1px 1px 1px $white,
 	0 0 0 #000, 1px 1px 1px $white;
-	// text-shadow: 1px 4px 6px $primaryColor,
-	// 0 0 0 #000, 1px 4px 6px $primaryColor;
 	font-weight: 700;
-	margin: 18px 5px;
 }
 
 h2 {
@@ -31,14 +28,12 @@ h2 {
 }
 
 h3 {
-	border: 1px solid green;
 	font-family: $primaryFont;
 	font-weight: 700;
 	color: $black;
 	text-transform: uppercase;
 	font-size: 1.6rem;
 	margin: 0;
-	padding: 10px 45px;
 	clear: both;
 }
 
@@ -82,7 +77,7 @@ body {
 }
 
 .row {
-	margin: 100px auto;
+	margin: 75px auto;
 	width: 100%;
 	clear: both;
 }

@@ -233,9 +233,8 @@ export default class LevidromeValidator extends React.Component {
 					})}
 				</div>
 			</div>
-			<div className="clearfix">
+			<div className="featureButtons">
 				<FeaturedButtons clearInputs={this.clear} />
-				<Twitter />
 			</div>
 			</main>
 		)
@@ -256,8 +255,9 @@ class FeaturedButtons extends React.Component {
 
 	render() {
 		return (
-			<div className="featureButtons clearfix">
-				<button className="clear" onClick={this.clearInput}>clear</button>
+			<div className="clearfix">
+				<button className="clear clearfix" onClick={this.clearInput}>clear</button>
+				<Twitter />
 			</div>
 		)
 	}
@@ -277,7 +277,8 @@ const Twitter = () => (
 	data-text="Check out new levidromes with this levidrome validator app!" 
 	data-url="https:fillerurl.com" 
 	data-hashtags="levidrome" 
-	data-show-count="false">Tweet</a>
+		data-show-count="false"
+		data-size="small">Tweet</a>
  );
 
 
@@ -293,7 +294,6 @@ class MainInput extends React.Component {
 
 	handleChange(e) {
 		this.setState({submittedWord: e.target.value})
-		console.log(e.target.value)
 
 		//send to value to parent so you can set textValue state from parent
 		this.props.handleChange(e.target.value)

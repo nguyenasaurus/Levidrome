@@ -74,6 +74,7 @@ button.submit {
 
 button.clear {
     left: 0;
+    margin-bottom: 20px;
 }
 
 i.fa {
@@ -100,3 +101,10 @@ p.instructions {
         padding-top: 20px;
         margin-bottom: -30px;
     }
+
+.featureButtons {
+    @extend .clearfix;
+    clear: both;
+    position: relative;
+    top: -20px;
+}
